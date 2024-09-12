@@ -4,12 +4,10 @@ import com.web2.BaseEntity;
 import com.web2.restaurant.Restaurent;
 import com.web2.user.User;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 @Entity
-@Getter
-@Setter
+@Data
 public class Review extends BaseEntity {
 
     @Id

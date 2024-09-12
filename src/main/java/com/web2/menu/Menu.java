@@ -3,14 +3,12 @@ package com.web2.menu;
 import com.web2.restaurant.Restaurent;
 import com.web2.review.Review;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
+@Data
 public class Menu {
 
     @Id

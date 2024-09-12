@@ -5,12 +5,10 @@ import com.web2.question.Question;
 import com.web2.review.Review;
 import com.web2.user.User;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 @Entity
-@Getter
-@Setter
+@Data
 public class Answer extends BaseEntity {
 
     @Id
