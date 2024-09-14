@@ -4,12 +4,15 @@ import com.web2.menu.Menu;
 import com.web2.review.Review;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 public class Restaurent {
 
     @Id
@@ -32,8 +35,8 @@ public class Restaurent {
     private String opening_hours;
     private String close_day;
 
-    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE) //음식점 삭제되면 메뉴 삭제됨.
-    private List<Menu> menuList = new ArrayList<>();
+   /* @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE) //음식점 삭제되면 메뉴 삭제됨.
+    private List<Menu> menuList = new ArrayList<>(); */
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE)
     private List<Review> reviewList = new ArrayList<>();

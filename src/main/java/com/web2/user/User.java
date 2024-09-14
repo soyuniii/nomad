@@ -5,14 +5,17 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
 public class User {
 
     @Id
     @GeneratedValue
-    @Column(name = "user_id") //실제 DB에서는 foreign_member_id라고 한다는 뜻
+    @Column(name = "user_id") //실제 DB에서는 user_id 라고 한다는 뜻
     private Long id;
 
     private String email;

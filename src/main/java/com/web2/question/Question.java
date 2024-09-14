@@ -5,11 +5,14 @@ import com.web2.answer.Answer;
 import com.web2.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 public class Question extends BaseEntity {
 
     @Id
@@ -27,4 +30,5 @@ public class Question extends BaseEntity {
 
     @OneToMany(mappedBy = "question")
     private List<Answer> answerList;
+
 }
