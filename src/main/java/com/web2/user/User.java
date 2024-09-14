@@ -25,7 +25,8 @@ public class User {
     private String nationality;
     private Boolean is_vegetarian;
     private Integer age;
-    private Double longitude;
-    private Double latitude;
 
+     /*private Double longitude;
+     private Double latitude;
+     검색 시 위치를 받아오는 것이 더 안정적이라 판단됨*/
 }
