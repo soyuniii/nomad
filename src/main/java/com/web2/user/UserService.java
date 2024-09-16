@@ -1,11 +1,8 @@
 package com.web2.user;
 
-
-import jakarta.persistence.metamodel.SetAttribute;
-import jakarta.servlet.http.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.web2.user.DuplicateException;
+
 
 import java.util.Optional;
 
@@ -21,14 +18,11 @@ public class UserService {
 
     //회원가입 중복된 이메일, 이름을 검사하고 예외가 발생하지 않는다면 저장
     public String sign(SignUser Dto) throws DuplicateException {
-        try{
-            checkNickname(Dto);
-            checkEmail(Dto);
-            createSignUser(Dto);
-            return "회원가입 성공";
-        }catch(DuplicateException e){
-            return e.getMessage();
-        }
+
+        checkNickname(Dto);
+        checkEmail(Dto);
+        createSignUser(Dto);
+        return "회원가입 성공";
 
     }
     // 로그인 기능 데이터베이스에 저장된 데이터와 DTO로 입력받은 데이터를 비교하여 로그인 성공 여부를 판단
