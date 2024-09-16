@@ -9,4 +9,3 @@ public record SignUser(
         Integer age) {
 }
 
-

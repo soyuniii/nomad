@@ -32,4 +32,7 @@ public class Review extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+
+    // 자기 자신 참조하는 속성 추가하기
 }
