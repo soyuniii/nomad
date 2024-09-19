@@ -35,7 +35,6 @@ public class UserService {
             throw new AuthenticationException("인증에 실패했습니다");
     }
 
-
     // 중복된 닉네임을 검사
     public void checkNickname(SignUser Dto) throws DuplicateException {
         Optional<User> value = userRepository.findByNickname(Dto.nickname());
@@ -70,25 +69,6 @@ public class UserService {
         entity.setAge(Dto.age());
         return entity;
     }
-    // 세션ID를 생성할 때 DTO로 입력받은 이메일과 비밀번호가 저장된 ID를 반환하는 메소드
-    // 이게 없으면.. 로그인 DTO로 유저 아이디를 전달하는 것이 불가능..
-
-    public Long returnID(LoginUser Dto) throws EntityNotFoundException{
-
-        Optional<User> value = userRepository.findByEmail(Dto.email());
-
-        if(value.isPresent()) {
-            User user = value.get();
-            return user.getId();
-        }else{
-            throw new EntityNotFoundException("Entity not found");
-        }
-
-    }
-
-
-
-
 
 
 }
