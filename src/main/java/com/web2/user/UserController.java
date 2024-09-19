@@ -25,9 +25,13 @@ public class UserController {
 
     }
 
-    @PostMapping("auth/login")
-    public ResponseEntity<String> login(@RequestBody LoginUser Dto, HttpSession session, HttpServletResponse response){
+    @PostMapping("/auth/login")
+    public ResponseEntity<String> login(@RequestBody LoginUser Dto, HttpSession session,
+                                        HttpServletResponse response){
         String result = userService.login(Dto);
+
+        User user = userService.findUserByEmail(Dto.email());
+        session.setAttribute("user", user); //세션에 user 객체 저장
 
         String csrfToken = UUID.randomUUID().toString(); // csrf 토큰을 통해서 사용자가 보낸 요청이 아닐 경우는 처리하지 않도록 함
         session.setAttribute("csrfToken", csrfToken); // 세션에 csrfToken이 포함되도록 함
@@ -35,14 +39,12 @@ public class UserController {
 
         Cookie sessionCookie = new Cookie("SESSION_ID", session.getId());
         sessionCookie.setHttpOnly(true); // 자바스크립트에서 접근 불가
-        sessionCookie.setSecure(true); // https 환경에서만 쿠키 전달
+        /*sessionCookie.setSecure(true); // https 환경에서만 쿠키 전달*/
         sessionCookie.setMaxAge(1800); // 쿠키의 만료 시간 30분
         sessionCookie.setPath("/");
         response.addCookie(sessionCookie); // 응답에 쿠키를 포함
 
-
         return ResponseEntity.ok(result);
-
         }
 
     @PostMapping("/auth/logout")

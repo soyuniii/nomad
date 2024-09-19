@@ -70,6 +70,15 @@ public class UserService {
         return entity;
     }
 
+    public User findUserByEmail(String email) {
+        Optional<User> userOptional = userRepository.findByEmail(email);
 
+        if(userOptional.isPresent()) {
+            return userOptional.get(); //사용자 존재 시 User 객체 반환
+        }
+        else {
+            throw new IllegalArgumentException("User not found");
+        }
+    }
 }
 

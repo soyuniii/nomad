@@ -5,11 +5,13 @@ import com.web2.restaurant.Restaurant;
 import com.web2.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Review extends BaseEntity {
 
     @Id
@@ -31,6 +33,13 @@ public class Review extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    public Review(String message, Double rating, Restaurant restaurant, User user) {
+        this.message = message;
+        this.rating = rating;
+        this.restaurant = restaurant;
+        this.user = user;
+    }
 
     //자기 자신 참조하는 속성 추가하기
 }

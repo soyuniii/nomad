@@ -1,7 +1,9 @@
 package com.web2.user;
 
-import jakarta.persistence.*;
-import lombok.Data;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,5 +26,4 @@ public class User {
     private Integer age;
 
     // 위도 경도 삭제
-
 }
