@@ -1,13 +1,15 @@
 package com.web2.review;
 
 import com.web2.BaseEntity;
-import com.web2.restaurant.Restaurent;
+import com.web2.restaurant.Restaurant;
 import com.web2.user.User;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
 public class Review extends BaseEntity {
 
     @Id
@@ -20,7 +22,7 @@ public class Review extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
-    private Restaurent restaurant;
+    private Restaurant restaurant;
 
 /*    @ManyToOne
     @JoinColumn(name = "menu_id")
@@ -29,4 +31,6 @@ public class Review extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    //자기 자신 참조하는 속성 추가하기
 }

@@ -1,14 +1,16 @@
 package com.web2.menu;
 
-import com.web2.restaurant.Restaurent;
+import com.web2.restaurant.Restaurant;
 import com.web2.review.Review;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 public class Menu {
 
     @Id
@@ -23,7 +25,7 @@ public class Menu {
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
-    private Restaurent restaurant;
+    private Restaurant restaurant;
 
     @OneToMany
     private List<Review> reviews;
