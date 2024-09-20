@@ -13,15 +13,15 @@ public class RestaurantDTO {
     private String name;
     private String category;
     private String address;
-    private int rating;
+    private double rating;
     private List<ReviewDTO> reviews;
 
-    public RestaurantDTO(Long id, String name, String category, String address, Double aDouble, List<ReviewDTO> reviewDTOS) {
+    public RestaurantDTO(Long id, String name, String category, String address, Double rating, List<ReviewDTO> reviewDTOS) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.address = address;
-        this.rating = getRating();
+        this.rating = rating;
         this.reviews = reviewDTOS;
     }
 }

@@ -24,7 +24,6 @@ public class ReviewController {
                                                HttpSession session) {
         //session에서 사용자 정보 가져오기
         String csrfToken = (String) session.getAttribute("csrfToken");
-
         //토큰 여부 확인
         if (csrfToken == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("사용자 인증이 필요합니다.");

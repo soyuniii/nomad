@@ -39,7 +39,7 @@ public class UserController {
 
         Cookie sessionCookie = new Cookie("SESSION_ID", session.getId());
         sessionCookie.setHttpOnly(true); // 자바스크립트에서 접근 불가
-        /*sessionCookie.setSecure(true); // https 환경에서만 쿠키 전달*/
+        sessionCookie.setSecure(true); // https 환경에서만 쿠키 전달
         sessionCookie.setMaxAge(1800); // 쿠키의 만료 시간 30분
         sessionCookie.setPath("/");
         response.addCookie(sessionCookie); // 응답에 쿠키를 포함

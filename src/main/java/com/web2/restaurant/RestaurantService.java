@@ -27,7 +27,8 @@ public class RestaurantService {
                 .orElseThrow(() -> new IllegalArgumentException("음식점을 찾을 수 없습니다."));
 
         List<ReviewDTO> reviewDTOS = restaurant.getReviews().stream()
-                .map(review -> new ReviewDTO(review.getUser().getNickname(), review.getUser().getNationality(), review.getMessage(), review.getRating()))
+                .map(review -> new ReviewDTO(review.getUser().getNickname(), review.getUser().getNationality(),
+                                             review.getMessage(), review.getRating()))
                 .collect(Collectors.toList());
 
         return new RestaurantDTO(
@@ -41,12 +42,13 @@ public class RestaurantService {
     }
 
     private Double calculateAverageRating(List<Review> reviews) {
-        return reviews.stream()
+        double average = reviews.stream()
                 .mapToDouble(Review::getRating)
                 .average()
                 .orElse(0.0);
+        //소수 첫째자리까지 반올림
+        return Math.round(average * 10.0) / 10.0;
     }
-
 
 
     //사용자가 마커를 클릭하면 세부 정보 조회 가능(카테고리는 이미 위치 기반 음식점에서 필터링?되있음.
