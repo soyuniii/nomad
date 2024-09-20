@@ -9,16 +9,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/reviews")
 public class ReviewController {
 
     private final ReviewService reviewService;
     private final ReviewRepository reviewRepository;
     private final RestaurantRepository restaurantRepository;
 
-    @PostMapping("/new")
+    @PostMapping("/reviews/new")
     public ResponseEntity<String> createReview(@RequestBody ReviewDTO reviewDTO,
                                                @RequestParam Long restaurantId,
                                                HttpSession session) {
@@ -39,5 +40,12 @@ public class ReviewController {
         reviewRepository.save(review);
 
         return ResponseEntity.ok("리뷰가 작성되었습니다.");
+    }
+
+    //restaurantId로 조회
+    @GetMapping("/restaurants/{id}/reviews")
+    public ResponseEntity<List<ReviewDTO>> getReviews(@PathVariable Long id) {
+        List<ReviewDTO> reviewDTOS = reviewService.getReviewList(id);
+        return ResponseEntity.ok(reviewDTOS);
     }
 }

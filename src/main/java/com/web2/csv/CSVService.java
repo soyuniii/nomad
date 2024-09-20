@@ -76,7 +76,6 @@ public class CSVService {
                     restaurant.setAddress(line[14]); // 주소 컬럼
                     restaurant.setWeekdays(line[17]);
                     restaurant.setWeekend(line[18]);
-                    restaurant.setIs_free_parking("무료 주차 가능".equals(line[19]));
                     restaurant.setVegetarian("채식 메뉴 있음".equals(line[24]));
                     restaurant.setHalal("할랄음식 메뉴 있음".equals(line[25]));
                     restaurant.setGlutenfree("글루텐프리 메뉴 있음".equals(line[26]));

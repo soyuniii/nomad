@@ -1,5 +1,6 @@
 package com.web2.restaurant;
 
+import com.web2.restaurant.dto.RestaurantDTO;
 import jdk.jfr.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -23,6 +24,6 @@ public interface RestaurantRepository extends JpaRepository<Restaurant,Long> {
             + "HAVING distance < :radius "
             + "ORDER BY distance", nativeQuery = true)
     List<Restaurant> findNearbyRestaurants(@Param("latitude") double latitude,
-                                           @Param("longitude") double longitude,
-                                           @Param("radius") double radius);
+                                              @Param("longitude") double longitude,
+                                              @Param("radius") double radius);
 }

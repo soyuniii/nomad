@@ -1,28 +1,27 @@
 package com.web2.restaurant.dto;
 
-import com.web2.review.dto.ReviewDTO;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter
 public class RestaurantDTO {
-    private Long id;
     private String name;
     private String category;
     private String address;
-    private double rating;
-    private List<ReviewDTO> reviews;
+    private String weekdays;
+    private String weekend;
+    private double averageRating;
+    private int reviewCount;
 
-    public RestaurantDTO(Long id, String name, String category, String address, Double rating, List<ReviewDTO> reviewDTOS) {
-        this.id = id;
+    public RestaurantDTO(String name, String category, String address, String weekdays, String weekend, double averageRating, int reviewCount) {
         this.name = name;
         this.category = category;
         this.address = address;
-        this.rating = rating;
-        this.reviews = reviewDTOS;
+        this.weekdays = weekdays;
+        this.weekend = weekend;
+        this.averageRating = averageRating;
+        this.reviewCount = reviewCount;
     }
 }
 

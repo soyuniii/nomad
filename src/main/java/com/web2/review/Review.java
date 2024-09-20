@@ -20,7 +20,7 @@ public class Review extends BaseEntity {
     private Long id;
 
     private String message;
-    private Double rating;
+    private int rating;
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
@@ -34,7 +34,7 @@ public class Review extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Review(String message, Double rating, Restaurant restaurant, User user) {
+    public Review(String message, int rating, Restaurant restaurant, User user) {
         this.message = message;
         this.rating = rating;
         this.restaurant = restaurant;

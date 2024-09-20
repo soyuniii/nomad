@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -18,7 +19,7 @@ public class UserController {
 
     public final UserService userService;
 
-    @PostMapping("/auth/sign") 
+    @PostMapping("/auth/sign")
     public ResponseEntity<String> sign(@RequestBody SignUser Dto) { // 전달하고 싶은 DTO를 따로 생성해서 전달해도 됨
         String result = userService.sign(Dto);
         return ResponseEntity.ok(result);  // 200 OK 상태 반환
@@ -27,10 +28,11 @@ public class UserController {
 
     @PostMapping("/auth/login")
     public ResponseEntity<String> login(@RequestBody LoginUser Dto, HttpSession session,
-                                        HttpServletResponse response){
+                                        HttpServletResponse response) {
         String result = userService.login(Dto);
 
         User user = userService.findUserByEmail(Dto.email());
+
         session.setAttribute("user", user); //세션에 user 객체 저장
 
         String csrfToken = UUID.randomUUID().toString(); // csrf 토큰을 통해서 사용자가 보낸 요청이 아닐 경우는 처리하지 않도록 함
@@ -45,7 +47,7 @@ public class UserController {
         response.addCookie(sessionCookie); // 응답에 쿠키를 포함
 
         return ResponseEntity.ok(result);
-        }
+    }
 
     @PostMapping("/auth/logout")
     public ResponseEntity<String> logout(HttpSession session, HttpServletResponse response) {
@@ -67,11 +69,6 @@ public class UserController {
             return ResponseEntity.ok("로그아웃 되셨습니다.");
         }
     }
-
-
-
-
-
 
 
 }

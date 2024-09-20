@@ -25,13 +25,14 @@ public class UserService {
         return "회원가입 성공";
 
     }
+
     // 로그인 기능 데이터베이스에 저장된 데이터와 DTO로 입력받은 데이터를 비교하여 로그인 성공 여부를 판단
     // 세션을 통한 로그인 기능을 구현할 것임, 그러므로 세션 ID를 넘겨주는 로직을 추가해야함
-    public String login(LoginUser Dto){
+    public String login(LoginUser Dto) {
         Optional<User> value = userRepository.findByEmailAndPassword(Dto.email(), Dto.password());
-        if(value.isPresent()){
+        if (value.isPresent()) {
             return "로그인 성공";
-        }else
+        } else
             throw new AuthenticationException("인증에 실패했습니다");
     }
 
@@ -39,15 +40,16 @@ public class UserService {
     public void checkNickname(SignUser Dto) throws DuplicateException {
         Optional<User> value = userRepository.findByNickname(Dto.nickname());
 
-        if(value.isPresent()) {
+        if (value.isPresent()) {
             throw new DuplicateException("nickname already exists");
         }
     }
-    // 중복된 이메일을 검사 
+
+    // 중복된 이메일을 검사
     public void checkEmail(SignUser Dto) throws DuplicateException {
         Optional<User> value = userRepository.findByEmail(Dto.email());
 
-        if(value.isPresent()) {
+        if (value.isPresent()) {
             throw new DuplicateException("Email already exists");
         }
     }
@@ -73,10 +75,9 @@ public class UserService {
     public User findUserByEmail(String email) {
         Optional<User> userOptional = userRepository.findByEmail(email);
 
-        if(userOptional.isPresent()) {
+        if (userOptional.isPresent()) {
             return userOptional.get(); //사용자 존재 시 User 객체 반환
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("User not found");
         }
     }

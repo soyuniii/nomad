@@ -1,8 +1,8 @@
 package com.web2.restaurant;
 
 import com.web2.restaurant.dto.RestaurantDTO;
+import com.web2.restaurant.dto.RestaurantDetailsDTO;
 import com.web2.review.Review;
-import com.web2.review.dto.ReviewDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,33 +15,50 @@ public class RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
 
-    public List<Restaurant> findRestaurantNearLocation(double latitude, double longitude, double radius) {
+    public List<RestaurantDTO> findRestaurantNearLocation(double latitude, double longitude, double radius) {
         // Haversine formula를 사용하여 근접한 음식점 검색
-        return restaurantRepository.findNearbyRestaurants(latitude, longitude, radius);
+        List<Restaurant> restaurants = restaurantRepository.findNearbyRestaurants(latitude, longitude, radius);
+
+        return restaurants.stream()
+                .map(restaurant -> {
+                    double averageRating = calculateAverageRating(restaurant.getReviews());
+                    int reviewCount = restaurant.getReviews().size();
+
+                    return new RestaurantDTO(
+                            restaurant.getName(),
+                            restaurant.getCategory(),
+                            restaurant.getAddress(),
+                            restaurant.getWeekdays(),
+                            restaurant.getWeekend(),
+                            averageRating,
+                            reviewCount
+                    );
+                }).collect(Collectors.toList());
     }
 
     //마커로 띄우고 누르면 조회
     //Restaurantid 기반으로 음식점 자세히 조회
-    public RestaurantDTO getRestaurantList(Long id) {
+    public RestaurantDetailsDTO getRestaurantDetails(Long id) {
         Restaurant restaurant = restaurantRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("음식점을 찾을 수 없습니다."));
 
-        List<ReviewDTO> reviewDTOS = restaurant.getReviews().stream()
-                .map(review -> new ReviewDTO(review.getUser().getNickname(), review.getUser().getNationality(),
-                                             review.getMessage(), review.getRating()))
-                .collect(Collectors.toList());
-
-        return new RestaurantDTO(
-                restaurant.getId(),
+        return new RestaurantDetailsDTO(
                 restaurant.getName(),
                 restaurant.getCategory(),
                 restaurant.getAddress(),
-                calculateAverageRating(restaurant.getReviews()),
-                reviewDTOS
+                restaurant.getWeekdays(),
+                restaurant.getWeekend(),
+                convertBooleanToString(restaurant.getVegetarian()),
+                convertBooleanToString(restaurant.getGlutenfree()),
+                convertBooleanToString(restaurant.getHalal())
         );
     }
 
-    private Double calculateAverageRating(List<Review> reviews) {
+    private String convertBooleanToString(Boolean value) {
+        return value ? "있음" : "없음";
+    }
+
+    public Double calculateAverageRating(List<Review> reviews) {
         double average = reviews.stream()
                 .mapToDouble(Review::getRating)
                 .average()
@@ -50,16 +67,7 @@ public class RestaurantService {
         return Math.round(average * 10.0) / 10.0;
     }
 
-
-    //사용자가 마커를 클릭하면 세부 정보 조회 가능(카테고리는 이미 위치 기반 음식점에서 필터링?되있음.
-    //그래도 뷰에 카테고리 같이 띄우기
-    /*public List<Restaurant> getRestaurantList(Long id){
-        Restaurant restaurant = restaurantRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("음식점을 찾을 수 없습니다."));
-
-    }*/
-
-    public void saveAll(List<Restaurant> restaurents) {
-        restaurantRepository.saveAll(restaurents);
+    public void saveAll(List<Restaurant> restaurants) {
+        restaurantRepository.saveAll(restaurants);
     }
 }
