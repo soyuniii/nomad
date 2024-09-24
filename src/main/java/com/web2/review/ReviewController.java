@@ -2,6 +2,7 @@ package com.web2.review;
 
 import com.web2.restaurant.RestaurantRepository;
 import com.web2.review.dto.ReviewDTO;
+import com.web2.review.dto.ReviewResponseDTO;
 import com.web2.user.User;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -44,8 +45,8 @@ public class ReviewController {
 
     //restaurantId로 조회
     @GetMapping("/restaurants/{id}/reviews")
-    public ResponseEntity<List<ReviewDTO>> getReviews(@PathVariable Long id) {
-        List<ReviewDTO> reviewDTOS = reviewService.getReviewList(id);
-        return ResponseEntity.ok(reviewDTOS);
+    public ResponseEntity<ReviewResponseDTO> getReviews(@PathVariable Long id) {
+        ReviewResponseDTO reviewResponseDTOS = reviewService.getReviewList(id);
+        return ResponseEntity.ok(reviewResponseDTOS);
     }
 }

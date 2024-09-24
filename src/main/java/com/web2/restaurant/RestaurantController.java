@@ -47,12 +47,12 @@ public class RestaurantController {
     }
 
     @GetMapping("/gluten-free-restaurants")
-    public List<Restaurant> getRestaurantFilterGlutenFree() {
+    public List<Restaurant> getRestaurantFilterIsGlutenFree() {
         return restaurantRepository.findByGlutenfree(true);
     }
 
     @GetMapping("/halal-restaurants")
-    public List<Restaurant> getRestaurantFilterHalal() {
+    public List<Restaurant> getRestaurantFilterIsHalal() {
         return restaurantRepository.findByHalal(true);
     }
 }

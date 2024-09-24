@@ -1,27 +1,19 @@
 package com.web2.restaurant.dto;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@RequiredArgsConstructor
 public class RestaurantDTO {
-    private String name;
-    private String category;
-    private String address;
-    private String weekdays;
-    private String weekend;
-    private double averageRating;
-    private int reviewCount;
-
-    public RestaurantDTO(String name, String category, String address, String weekdays, String weekend, double averageRating, int reviewCount) {
-        this.name = name;
-        this.category = category;
-        this.address = address;
-        this.weekdays = weekdays;
-        this.weekend = weekend;
-        this.averageRating = averageRating;
-        this.reviewCount = reviewCount;
-    }
+    private final String name;
+    private final String category;
+    private final String address;
+    private final String weekdays;
+    private final String weekend;
+    private final double averageRating;
+    private final int reviewCount;
 }
 

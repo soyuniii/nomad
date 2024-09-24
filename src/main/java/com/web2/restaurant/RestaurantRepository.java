@@ -10,11 +10,14 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface RestaurantRepository extends JpaRepository<Restaurant,Long> {
+public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
 
     List<Restaurant> findByVegetarian(Boolean vegetarian);
+
     List<Restaurant> findByHalal(Boolean halal);
+
     List<Restaurant> findByGlutenfree(Boolean GlutenFree);
+
     List<Restaurant> findByCategory(String category);
 
     //@Query 어노테이션을 통해 쿼리가 실행될 때 MySQL이 해당 쿼리를 처리
@@ -24,6 +27,6 @@ public interface RestaurantRepository extends JpaRepository<Restaurant,Long> {
             + "HAVING distance < :radius "
             + "ORDER BY distance", nativeQuery = true)
     List<Restaurant> findNearbyRestaurants(@Param("latitude") double latitude,
-                                              @Param("longitude") double longitude,
-                                              @Param("radius") double radius);
+                                           @Param("longitude") double longitude,
+                                           @Param("radius") double radius);
 }
