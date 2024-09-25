@@ -59,7 +59,7 @@ public class UserController {
             session.invalidate();
 
             // 클라이언트 측의 세션 쿠키 삭제
-            Cookie sessionCookie = new Cookie("SESSIONID", null); // 세션 ID를 null로 설정
+            Cookie sessionCookie = new Cookie("SESSION_ID", null); // 세션 ID를 null로 설정
             sessionCookie.setPath("/"); // 유효 경로 설정
             sessionCookie.setMaxAge(0); // 쿠키 만료 시간 0으로 설정 (즉시 삭제)
             sessionCookie.setHttpOnly(true); // HttpOnly 속성 유지

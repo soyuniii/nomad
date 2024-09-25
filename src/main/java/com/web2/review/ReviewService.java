@@ -5,6 +5,7 @@ import com.web2.restaurant.RestaurantRepository;
 import com.web2.restaurant.RestaurantService;
 import com.web2.review.dto.ReviewDTO;
 import com.web2.review.dto.ReviewResponseDTO;
+import com.web2.review.dto.ReviewUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ public class ReviewService {
 
     private final RestaurantRepository restaurantRepository;
     private final RestaurantService restaurantService;
+    private final ReviewRepository reviewRepository;
 
     public ReviewResponseDTO getReviewList(Long id) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm");
@@ -31,9 +33,6 @@ public class ReviewService {
                 .map(review -> {
                     String nickname = review.getUser().getNickname();
                     String nationality = review.getUser().getNationality();
-                    double averageRating = restaurantService.calculateAverageRating(restaurant.getReviews());
-                    int reviewCount = restaurant.getReviews().size();
-
                     String createdAt = review.getCreatedAt().format(formatter); // 포맷 적용
 
                     return new ReviewDTO(
@@ -49,5 +48,20 @@ public class ReviewService {
         int reviewCount = reviews.size();
 
         return new ReviewResponseDTO(reviewDTOS, averageRating, reviewCount);
+    }
+
+    //리뷰 수정 메서드
+    public void updateReview(ReviewUpdateRequest request,
+                               Long id) { //review_id
+        String updatemessage = request.message();
+        int updaterating = request.rating();
+
+        Review review = reviewRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("리뷰를 찾을수 없습니다."));
+
+        review.setMessage(updatemessage);
+        review.setRating(updaterating);
+
+        reviewRepository.save(review);
     }
 }

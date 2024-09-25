@@ -3,9 +3,7 @@ package com.web2.user;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
 import java.util.Optional;
-
 
 @RequiredArgsConstructor
 @Service
@@ -23,7 +21,6 @@ public class UserService {
         checkEmail(Dto);
         createSignUser(Dto);
         return "회원가입 성공";
-
     }
 
     // 로그인 기능 데이터베이스에 저장된 데이터와 DTO로 입력받은 데이터를 비교하여 로그인 성공 여부를 판단
