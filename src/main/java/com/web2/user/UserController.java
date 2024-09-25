@@ -1,11 +1,12 @@
 package com.web2.user;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ public class UserController {
 
     public final UserService userService;
 
+
     @PostMapping("/auth/sign") 
     public ResponseEntity<String> sign(@RequestBody SignUser Dto) { // 전달하고 싶은 DTO를 따로 생성해서 전달해도 됨
         String result = userService.sign(Dto);
@@ -26,8 +28,24 @@ public class UserController {
     }
 
     @PostMapping("auth/login")
-    public ResponseEntity<String> login(@RequestBody LoginUser Dto, HttpSession session, HttpServletResponse response){
+    public ResponseEntity<String> login(@ModelAttribute LoginUser Dto, HttpSession session,
+                                        HttpServletRequest request, HttpServletResponse response){
         String result = userService.login(Dto);
+
+
+        if (session != null) {
+            session.invalidate(); // 기존 세션 무효화
+        }
+
+        // 새로운 세션 생성
+        session = request.getSession(true);
+
+        // 회원이랑 매핑하기
+        User user = userService.mappingUser(Dto);
+        session.setAttribute("user", user); // 회원 객체와 세션을 매핑
+        // WebSocket에서 사용하기 위해 userId를 세션에 저장
+        session.setAttribute("userId", user.getId().toString());
+
 
         String csrfToken = UUID.randomUUID().toString(); // csrf 토큰을 통해서 사용자가 보낸 요청이 아닐 경우는 처리하지 않도록 함
         session.setAttribute("csrfToken", csrfToken); // 세션에 csrfToken이 포함되도록 함
@@ -42,8 +60,8 @@ public class UserController {
 
 
         return ResponseEntity.ok(result);
-
         }
+
 
     @PostMapping("/auth/logout")
     public ResponseEntity<String> logout(HttpSession session, HttpServletResponse response) {
@@ -55,7 +73,7 @@ public class UserController {
             session.invalidate();
 
             // 클라이언트 측의 세션 쿠키 삭제
-            Cookie sessionCookie = new Cookie("SESSIONID", null); // 세션 ID를 null로 설정
+            Cookie sessionCookie = new Cookie("SESSION_ID", null); // 세션 ID를 null
             sessionCookie.setPath("/"); // 유효 경로 설정
             sessionCookie.setMaxAge(0); // 쿠키 만료 시간 0으로 설정 (즉시 삭제)
             sessionCookie.setHttpOnly(true); // HttpOnly 속성 유지
@@ -65,8 +83,6 @@ public class UserController {
             return ResponseEntity.ok("로그아웃 되셨습니다.");
         }
     }
-
-
 
 
 

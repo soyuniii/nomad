@@ -2,7 +2,8 @@ package com.web2.global;
 
 import com.web2.user.AuthenticationException;
 import com.web2.user.DuplicateException;
-import com.web2.user.EntityNotFoundException;
+import com.web2.user.UnauthorizedException;
+import com.web2.user.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -19,19 +20,23 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleAuthenticationException(AuthenticationException ex) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
     }
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<String> handleEntityNotFoundException(EntityNotFoundException ex) {
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<String> handleUnauthorizedException(UnauthorizedException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
+    }
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<String> handleEntityNotFoundException(UserNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
     @ExceptionHandler(IllegalStateException.class)
-    public ResponseEntity<String> handleIllegalStateException(IllegalStateException ex) {
-        // 예외 메시지 또는 커스텀 메시지를 클라이언트에 반환
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("세션이 이미 무효화되었습니다.");
+    public ResponseEntity<String> handleIllegalStateException(IllegalStateException ex){
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
     }
 
+
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleGeneralException(Exception ex) {
+    public ResponseEntity<String> handleGeneralException(Exception e) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류가 발생했습니다.");
     }
 }

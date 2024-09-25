@@ -1,11 +1,9 @@
 package com.web2.user;
 
+import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-
 import java.util.Optional;
-
 
 @RequiredArgsConstructor
 @Service
@@ -15,6 +13,7 @@ public class UserService {
 
     // 회원가입 시 중복된 이메일, 이름을 검사
     // 로그인 시에는 저장된 이메일과 패스워드 쌍이 일치하는 지 확인
+
 
     //회원가입 중복된 이메일, 이름을 검사하고 예외가 발생하지 않는다면 저장
     public String sign(SignUser Dto) throws DuplicateException {
@@ -27,12 +26,15 @@ public class UserService {
     }
     // 로그인 기능 데이터베이스에 저장된 데이터와 DTO로 입력받은 데이터를 비교하여 로그인 성공 여부를 판단
     // 세션을 통한 로그인 기능을 구현할 것임, 그러므로 세션 ID를 넘겨주는 로직을 추가해야함
-    public String login(LoginUser Dto){
+
+    public String login(LoginUser Dto) throws AuthenticationException {
         Optional<User> value = userRepository.findByEmailAndPassword(Dto.email(), Dto.password());
-        if(value.isPresent()){
-            return "로그인 성공";
-        }else
-            throw new AuthenticationException("인증에 실패했습니다");
+
+        if (value.isPresent()) {
+           return "로그인 성공";
+        } else {
+            throw new AuthenticationException("인증에 실패했습니다.");
+        }
     }
 
     // 중복된 닉네임을 검사
@@ -68,6 +70,24 @@ public class UserService {
         entity.setIs_vegetarian(Dto.is_vegetarian());
         entity.setAge(Dto.age());
         return entity;
+    }
+    public User mappingUser(LoginUser Dto) throws UserNotFoundException {
+
+        Optional<User> value = userRepository.findByEmail(Dto.email());
+        if(value.isPresent()) {
+            return value.get();
+        }
+        else throw new EntityExistsException("해당 이메일로 가입된 유저가 없습니다");
+
+
+    }
+    // 닉네임을 통해 사용자를 찾는 메서드
+    public Optional<User> findByNickname(String nickname) {
+        return userRepository.findByNickname(nickname);
+    }
+
+    public Optional<User> findByEmail(String email){
+        return userRepository.findByEmail(email);
     }
 
 
