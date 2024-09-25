@@ -1,11 +1,11 @@
 package com.web2.user;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.web2.review.Review;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -25,5 +25,6 @@ public class User {
     private Boolean is_vegetarian;
     private Integer age;
 
-    // 위도 경도 삭제
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Review> reviewList;
 }

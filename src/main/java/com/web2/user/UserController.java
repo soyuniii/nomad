@@ -1,14 +1,14 @@
 package com.web2.user;
 
+import com.web2.session.SessionService;
+import com.web2.user.dto.UserDTO;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -17,7 +17,8 @@ import java.util.UUID;
 @RestController
 public class UserController {
 
-    public final UserService userService;
+    private final UserService userService;
+    private final SessionService sessionService;
 
     @PostMapping("/auth/sign")
     public ResponseEntity<String> sign(@RequestBody SignUser Dto) { // 전달하고 싶은 DTO를 따로 생성해서 전달해도 됨
@@ -68,6 +69,20 @@ public class UserController {
 
             return ResponseEntity.ok("로그아웃 되셨습니다.");
         }
+    }
+
+    //프로필 조회
+    @GetMapping("/my-profile/{id}")
+    public ResponseEntity<?> getUser(@PathVariable("id") Long id,
+                                     HttpSession session,
+                                     @CookieValue(value = "SESSION_ID", required = false) String sessionId) {
+
+        sessionService.validateSession(sessionId, session);
+        sessionService.validateCsrfToken(session);
+
+        UserDTO userDTO = userService.getprofile(id);
+
+        return ResponseEntity.ok(userDTO);
     }
 
 

@@ -52,7 +52,7 @@ public class ReviewService {
 
     //리뷰 수정 메서드
     public void updateReview(ReviewUpdateRequest request,
-                               Long id) { //review_id
+                             Long id) { //review_id
         String updatemessage = request.message();
         int updaterating = request.rating();
 

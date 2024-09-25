@@ -1,9 +1,13 @@
 package com.web2.user;
 
+import com.web2.review.Review;
+import com.web2.user.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -31,6 +35,22 @@ public class UserService {
             return "로그인 성공";
         } else
             throw new AuthenticationException("인증에 실패했습니다");
+    }
+
+    //추가된 프로필 조회 메서드
+    public UserDTO getprofile(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("사용자 정보를 찾을 수 없습니다."));
+
+        List<Review> reviews = user.getReviewList();
+        int reviewCount = reviews.size();
+
+        return new UserDTO(
+                user.getNickname(),
+                user.getNationality(),
+                user.getAge(),
+                reviewCount
+        );
     }
 
     // 중복된 닉네임을 검사
