@@ -1,13 +1,16 @@
 package com.web2.user;
 
+import com.web2.global.exception.AuthenticationException;
+import com.web2.global.exception.DuplicateException;
 import com.web2.review.Review;
+import com.web2.user.dto.LoginUser;
+import com.web2.user.dto.SignUser;
 import com.web2.user.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service

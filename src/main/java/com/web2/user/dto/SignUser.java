@@ -1,4 +1,4 @@
-package com.web2.user;
+package com.web2.user.dto;
 
 public record SignUser(
         String nickname,

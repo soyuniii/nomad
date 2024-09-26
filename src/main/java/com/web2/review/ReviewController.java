@@ -4,7 +4,7 @@ import com.web2.restaurant.RestaurantRepository;
 import com.web2.review.dto.ReviewDTO;
 import com.web2.review.dto.ReviewResponseDTO;
 import com.web2.review.dto.ReviewUpdateRequest;
-import com.web2.session.SessionService;
+import com.web2.global.SessionService;
 import com.web2.user.User;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class ReviewController {
                                                @RequestParam Long restaurantId,
                                                HttpSession session,
                                                @CookieValue(value = "SESSION_ID", required = false) String sessionId) {
-        //SessionService 없을 때 원래 예외처리 코드
+        //SessionService 없을 때 원래 예외처리ㅌ   코드
         /*// 세션에서 저장된 사용자 정보 가져오기
         if (sessionId == null || !sessionId.equals(session.getId())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("잘못된 세션입니다. 다시 로그인해주세요.");

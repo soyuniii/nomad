@@ -17,7 +17,7 @@ public class RestaurantDetailsDTO {
     private String glutenfree;
     private String halal;
 
-    public RestaurantDetailsDTO( String name, String category, String address, String weekdays, String weekend, String vegetarian, String glutenfree, String halal) {
+    public RestaurantDetailsDTO(String name, String category, String address, String weekdays, String weekend, String vegetarian, String glutenfree, String halal) {
         this.name = name;
         this.category = category;
         this.address = address;

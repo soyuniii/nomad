@@ -1,4 +1,4 @@
-package com.web2.user;
+package com.web2.user.dto;
 
 // 로그인 시 필요한 정보를 받아오는 DTO
 

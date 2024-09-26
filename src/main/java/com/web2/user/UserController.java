@@ -1,16 +1,16 @@
 package com.web2.user;
 
-import com.web2.session.SessionService;
+import com.web2.global.SessionService;
+import com.web2.user.dto.LoginUser;
+import com.web2.user.dto.SignUser;
 import com.web2.user.dto.UserDTO;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
