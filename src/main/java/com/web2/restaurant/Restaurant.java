@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -39,6 +41,4 @@ public class Restaurant {
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE)
     private List<Review> reviews = new ArrayList<>();
 
-    /*@OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE) //음식점 삭제되면 메뉴 삭제됨.
-    private List<Menu> menuList = new ArrayList<>();*/
 }

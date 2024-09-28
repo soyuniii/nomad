@@ -9,7 +9,11 @@ import com.web2.user.User;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,17 +25,30 @@ public class ReviewController {
     private final RestaurantRepository restaurantRepository;
 
     @PostMapping("/reviews/new")
+    @Transactional
     public ResponseEntity<String> createReview(@RequestBody ReviewDTO reviewDTO,
                                                @RequestParam Long restaurantId,
-                                               HttpSession session,
-                                               @CookieValue(value = "SESSION_ID", required = false) String sessionId) {
+                                               @CookieValue(value = "SESSION_ID", required = false) String sessionId,
+                                               HttpSession session) {
         sessionService.validateSession(sessionId, session);
         sessionService.validateCsrfToken(session);
         User user = sessionService.validateUser(session);
 
+       /* Set<Hashtag> hashtags = new HashSet<>();
+        for (String tagName: reviewDTO.hashtags()) {
+            Hashtag hashtag = hashtagRepository.findByName(tagName)
+                    .orElseGet(() -> {
+                            Hashtag newHashtag = new Hashtag();
+                            newHashtag.setName(tagName);
+                            return hashtagRepository.save(newHashtag); //새로운 해시태그 저장
+                            });
+            hashtags.add(hashtag);
+        }*/
+
         Review review = new Review(reviewDTO.message(), reviewDTO.rating(),
-                                   restaurantRepository.getReferenceById(restaurantId), user);
+                                   restaurantRepository.getReferenceById(restaurantId), user, reviewDTO.hashtags());
         reviewRepository.save(review);
+
         return ResponseEntity.ok("리뷰가 작성되었습니다.");
     }
 

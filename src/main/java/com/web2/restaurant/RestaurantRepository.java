@@ -29,4 +29,8 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
     List<Restaurant> findNearbyRestaurants(@Param("latitude") double latitude,
                                            @Param("longitude") double longitude,
                                            @Param("radius") double radius);
+
+    //해시태그가 포함된 리뷰가 있는 음식점을 검색
+    @Query("SELECT r FROM Restaurant r JOIN r.reviews rev WHERE rev.hashtags LIKE %:keyword%")
+    List<Restaurant> findRestaurantsByReviewHashtags(@Param("keyword") String keyword);
 }

@@ -36,6 +36,29 @@ public class RestaurantService {
                 }).collect(Collectors.toList());
     }
 
+    //검색 키워드 기반으로 RestaurantDTO 반환
+    public List<RestaurantDTO> searchRestaurant(String keyword) {
+        List<Restaurant> restaurants = restaurantRepository.findRestaurantsByReviewHashtags(keyword);
+
+        List<RestaurantDTO> restaurantDTOS = restaurants.stream()
+                .map(restaurant -> {
+                    double averageRating = calculateAverageRating(restaurant.getReviews());
+                    int reviewCount = restaurant.getReviews().size();
+
+                    return new RestaurantDTO(
+                            restaurant.getName(),
+                            restaurant.getCategory(),
+                            restaurant.getAddress(),
+                            restaurant.getWeekdays(),
+                            restaurant.getWeekend(),
+                            averageRating,
+                            reviewCount
+                    );
+                }).collect(Collectors.toList());
+
+        return restaurantDTOS;
+    }
+
     //마커로 띄우고 누르면 조회
     //Restaurantid 기반으로 음식점 자세히 조회
     public RestaurantDetailsDTO getRestaurantDetails(Long id) {
@@ -58,7 +81,7 @@ public class RestaurantService {
         return value ? "있음" : "없음";
     }
 
-    private Double calculateAverageRating(List<Review> reviews) {
+    public Double calculateAverageRating(List<Review> reviews) {
         double average = reviews.stream()
                 .mapToDouble(Review::getRating)
                 .average()

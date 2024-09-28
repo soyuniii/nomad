@@ -4,6 +4,7 @@ import com.web2.restaurant.dto.LocationRequest;
 import com.web2.restaurant.dto.RestaurantDTO;
 import com.web2.restaurant.dto.RestaurantDetailsDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +26,12 @@ public class RestaurantController {
         double radius = request.getRadius();
 
         return restaurantService.findRestaurantNearLocation(latitude, longitude, radius);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<RestaurantDTO>> searchByHashtag(@RequestParam String keyword) {
+        List<RestaurantDTO> restaurantDTOS = restaurantService.searchRestaurant(keyword);
+        return ResponseEntity.ok(restaurantDTOS);
     }
 
     //음식저 세부정보 조회(리뷰는 개수만)

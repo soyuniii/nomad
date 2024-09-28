@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,7 +41,8 @@ public class ReviewService {
                             nationality,
                             review.getMessage(),
                             review.getRating(),
-                            createdAt
+                            createdAt,
+                            review.getHashtags()
                     );
                 }).collect(Collectors.toList());
 

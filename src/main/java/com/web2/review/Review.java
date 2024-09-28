@@ -26,20 +26,27 @@ public class Review extends BaseEntity {
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
-/*    @ManyToOne
-    @JoinColumn(name = "menu_id")
-    private Menu menu;*/
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Review(String message, int rating, Restaurant restaurant, User user) {
+    private String hashtags; //추가
+
+
+   /* @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "review_hashtag",
+            joinColumns = @JoinColumn(name = "review_id"),
+            //연관된 엔티티(Hashtag)의 외래 키를 설정
+            inverseJoinColumns = @JoinColumn(name = "hashtag_id")
+    )
+    private Set<Hashtag> hashtags = new HashSet<>();
+*/
+    public Review(String message, int rating, Restaurant restaurant, User user, String hashtags) {
         this.message = message;
         this.rating = rating;
         this.restaurant = restaurant;
         this.user = user;
+        this.hashtags = hashtags;
     }
-
-    //자기 자신 참조하는 속성 추가하기
 }
