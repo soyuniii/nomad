@@ -58,7 +58,7 @@ public class RestaurantService {
         return value ? "있음" : "없음";
     }
 
-    public Double calculateAverageRating(List<Review> reviews) {
+    private Double calculateAverageRating(List<Review> reviews) {
         double average = reviews.stream()
                 .mapToDouble(Review::getRating)
                 .average()

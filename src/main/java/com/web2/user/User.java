@@ -25,6 +25,7 @@ public class User {
     private Boolean is_vegetarian;
     private Integer age;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    //만약 ReviewList가 항상 필요하다면 EAGER 추가
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<Review> reviewList;
 }

@@ -8,6 +8,7 @@ import com.web2.user.dto.SignUser;
 import com.web2.user.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -41,10 +42,9 @@ public class UserService {
     }
 
     //추가된 프로필 조회 메서드
-    public UserDTO getprofile(Long id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("사용자 정보를 찾을 수 없습니다."));
-
+    @Transactional
+    //해당 메서드가 호출되는 동안 Session이 열려 있어 lazy-loaded 데이터도 정상적으로 로드
+    public UserDTO getprofile(User user) {
         List<Review> reviews = user.getReviewList();
         int reviewCount = reviews.size();
 

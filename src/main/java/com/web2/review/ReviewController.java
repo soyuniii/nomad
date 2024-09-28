@@ -25,22 +25,6 @@ public class ReviewController {
                                                @RequestParam Long restaurantId,
                                                HttpSession session,
                                                @CookieValue(value = "SESSION_ID", required = false) String sessionId) {
-        //SessionService 없을 때 원래 예외처리ㅌ   코드
-        /*// 세션에서 저장된 사용자 정보 가져오기
-        if (sessionId == null || !sessionId.equals(session.getId())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("잘못된 세션입니다. 다시 로그인해주세요.");
-        }
-        //session에서 사용자 정보 가져오기
-        String csrfToken = (String) session.getAttribute("csrfToken");
-        //토큰 여부 확인
-        if (csrfToken == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("사용자 인증이 필요합니다.");
-        }
-        //세션에 저장된 사용자 정보 확인
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 후 이용해주세요.");
-        }*/
         sessionService.validateSession(sessionId, session);
         sessionService.validateCsrfToken(session);
         User user = sessionService.validateUser(session);

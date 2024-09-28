@@ -28,12 +28,12 @@ public class UserController {
     }
 
     @PostMapping("/auth/login")
-    public ResponseEntity<String> login(@RequestBody LoginUser Dto, HttpSession session,
+    public ResponseEntity<String> login(@RequestBody LoginUser Dto,
+                                        HttpSession session,
                                         HttpServletResponse response) {
         String result = userService.login(Dto);
 
         User user = userService.findUserByEmail(Dto.email());
-
         session.setAttribute("user", user); //세션에 user 객체 저장
 
         String csrfToken = UUID.randomUUID().toString(); // csrf 토큰을 통해서 사용자가 보낸 요청이 아닐 경우는 처리하지 않도록 함
@@ -72,17 +72,18 @@ public class UserController {
     }
 
     //프로필 조회
-    @GetMapping("/my-profile/{id}")
-    public ResponseEntity<?> getUser(@PathVariable("id") Long id,
-                                     HttpSession session,
-                                     @CookieValue(value = "SESSION_ID", required = false) String sessionId) {
+    //세션에서 user_id 가져오는 걸로 수정하기
+    @GetMapping("/my-profile")
+    public UserDTO getUser(HttpSession session,
+                           @CookieValue(value = "SESSION_ID", required = false) String sessionId) {
 
         sessionService.validateSession(sessionId, session);
         sessionService.validateCsrfToken(session);
+        User user = sessionService.validateUser(session);
 
-        UserDTO userDTO = userService.getprofile(id);
+        UserDTO userDTO = userService.getprofile(user);
 
-        return ResponseEntity.ok(userDTO);
+        return userDTO;
     }
 
 
