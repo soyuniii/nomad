@@ -38,9 +38,10 @@ public class RestaurantService {
 
     //검색 키워드 기반으로 RestaurantDTO 반환
     public List<RestaurantDTO> searchRestaurant(String keyword) {
-        List<Restaurant> restaurants = restaurantRepository.findRestaurantsByReviewHashtags(keyword);
+        String cleanKeyword = keyword.trim(); // 공백 제거
+        List<Restaurant> restaurants = restaurantRepository.findRestaurantsByReviewHashtags(cleanKeyword);
 
-        List<RestaurantDTO> restaurantDTOS = restaurants.stream()
+        return restaurants.stream()
                 .map(restaurant -> {
                     double averageRating = calculateAverageRating(restaurant.getReviews());
                     int reviewCount = restaurant.getReviews().size();
@@ -55,8 +56,6 @@ public class RestaurantService {
                             reviewCount
                     );
                 }).collect(Collectors.toList());
-
-        return restaurantDTOS;
     }
 
     //마커로 띄우고 누르면 조회
