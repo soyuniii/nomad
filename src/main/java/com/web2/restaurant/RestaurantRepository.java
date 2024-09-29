@@ -35,5 +35,4 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
     @Query("SELECT DISTINCT r FROM Restaurant r JOIN r.reviews rev WHERE rev.hashtags LIKE %:keyword%")
     List<Restaurant> findRestaurantsByReviewHashtags(@Param("keyword") String keyword);
 
-
 }

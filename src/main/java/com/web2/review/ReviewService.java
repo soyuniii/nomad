@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,12 +56,14 @@ public class ReviewService {
                              Long id) { //review_id
         String updatemessage = request.message();
         int updaterating = request.rating();
+        String hashtags = request.hashtags();
 
         Review review = reviewRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("리뷰를 찾을수 없습니다."));
 
         review.setMessage(updatemessage);
         review.setRating(updaterating);
+        review.setHashtags(hashtags);
 
         reviewRepository.save(review);
     }

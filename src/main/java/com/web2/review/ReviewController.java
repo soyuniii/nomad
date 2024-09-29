@@ -34,19 +34,8 @@ public class ReviewController {
         sessionService.validateCsrfToken(session);
         User user = sessionService.validateUser(session);
 
-       /* Set<Hashtag> hashtags = new HashSet<>();
-        for (String tagName: reviewDTO.hashtags()) {
-            Hashtag hashtag = hashtagRepository.findByName(tagName)
-                    .orElseGet(() -> {
-                            Hashtag newHashtag = new Hashtag();
-                            newHashtag.setName(tagName);
-                            return hashtagRepository.save(newHashtag); //새로운 해시태그 저장
-                            });
-            hashtags.add(hashtag);
-        }*/
-
         Review review = new Review(reviewDTO.message(), reviewDTO.rating(),
-                                   restaurantRepository.getReferenceById(restaurantId), user, reviewDTO.hashtags());
+                restaurantRepository.getReferenceById(restaurantId), user, reviewDTO.hashtags());
         reviewRepository.save(review);
 
         return ResponseEntity.ok("리뷰가 작성되었습니다.");
