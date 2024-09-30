@@ -1,19 +1,16 @@
 package com.web2.review;
 
+import com.web2.global.SessionService;
 import com.web2.restaurant.RestaurantRepository;
 import com.web2.review.dto.ReviewDTO;
 import com.web2.review.dto.ReviewResponseDTO;
 import com.web2.review.dto.ReviewUpdateRequest;
-import com.web2.global.SessionService;
 import com.web2.user.User;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
