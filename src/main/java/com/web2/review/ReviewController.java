@@ -1,16 +1,22 @@
 package com.web2.review;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.web2.S3.S3Service;
 import com.web2.global.SessionService;
 import com.web2.restaurant.RestaurantRepository;
 import com.web2.review.dto.ReviewDTO;
 import com.web2.review.dto.ReviewResponseDTO;
-import com.web2.review.dto.ReviewUpdateRequest;
+import com.web2.review.dto.ReviewUpdateDTO;
 import com.web2.user.User;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,25 +26,39 @@ public class ReviewController {
     private final SessionService sessionService;
     private final ReviewRepository reviewRepository;
     private final RestaurantRepository restaurantRepository;
+    private final S3Service s3Service;
 
     @PostMapping("/reviews/new")
-    @Transactional
-    public ResponseEntity<String> createReview(@RequestBody ReviewDTO reviewDTO,
-                                               @RequestParam Long restaurantId,
+    public ResponseEntity<String> createReview(@RequestParam Long restaurantId,
                                                @CookieValue(value = "SESSION_ID", required = false) String sessionId,
-                                               HttpSession session) {
-        sessionService.validateSession(sessionId, session);
-        sessionService.validateCsrfToken(session);
-        User user = sessionService.validateUser(session);
+                                               @RequestPart("reviewDTO") String reviewDTOString,
+                                               @RequestPart(value = "image") MultipartFile image, //이미지 파일을 추가로 받음
+                                               HttpSession session) throws JsonProcessingException {
+        try {
+            sessionService.validateSession(sessionId, session);
+            sessionService.validateCsrfToken(session);
+            User user = sessionService.validateUser(session);
 
-        Review review = new Review(reviewDTO.message(), reviewDTO.rating(),
-                restaurantRepository.getReferenceById(restaurantId), user, reviewDTO.hashtags());
-        reviewRepository.save(review);
+            // JSON 파싱: reviewDTOString을 JSON 문자열로 받아서 ReviewDTO 객체로 변환
+            ObjectMapper objectMapper = new ObjectMapper();
+            ReviewDTO reviewDTO = objectMapper.readValue(reviewDTOString, ReviewDTO.class);
 
-        return ResponseEntity.ok("리뷰가 작성되었습니다.");
+            // 이미지 S3 업로드 로직 추가
+            String imageUrl = s3Service.uploadFile(image);  // 업로드 후 이미지 URL 반환
+
+            Review review = new Review(reviewDTO.message(), reviewDTO.rating(),
+                    restaurantRepository.getReferenceById(restaurantId), user, reviewDTO.hashtags());
+
+            review.setImageUrl(imageUrl);  // 업로드한 이미지 URL을 리뷰에 설정
+            reviewRepository.save(review);
+
+            return ResponseEntity.ok("리뷰가 작성되었습니다.");
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("JSON 파싱 오류가 발생했습니다.");
+        }
     }
 
-    //restaurantId로 조회
+    //restaurantId로 특정 음식점 리뷰 조회
     @GetMapping("/restaurants/{id}/reviews")
     public ResponseEntity<ReviewResponseDTO> getReviews(@PathVariable Long id) {
         ReviewResponseDTO reviewResponseDTOS = reviewService.getReviewList(id);
@@ -47,14 +67,20 @@ public class ReviewController {
 
     @PatchMapping("/reviews/update/{id}")
     public ResponseEntity<String> updateReview(@PathVariable Long id,
-                                               @RequestBody ReviewUpdateRequest request,
+                                               @RequestPart("updateDTO") String updateDTOString,
+                                               @RequestPart(value = "image", required = false) MultipartFile image,
                                                HttpSession session,
-                                               @CookieValue(value = "SESSION_ID", required = false) String sessionId) {
-
+                                               @CookieValue(value = "SESSION_ID", required = false) String sessionId) throws JsonProcessingException {
         sessionService.validateSession(sessionId, session);
         sessionService.validateCsrfToken(session);
 
-        reviewService.updateReview(request, id);
+        ObjectMapper objectMapper = new ObjectMapper();
+        ReviewUpdateDTO updateDTO = objectMapper.readValue(updateDTOString, ReviewUpdateDTO.class);
+
+        String imageUrl = s3Service.uploadFile(image);  // 업로드 후 이미지 URL 반환
+
+        Review review = reviewService.updateReview(updateDTO, id, imageUrl);
+        reviewRepository.save(review);
 
         return ResponseEntity.ok("리뷰가 수정되었습니다.");
     }
@@ -66,6 +92,7 @@ public class ReviewController {
         sessionService.validateSession(sessionId, session);
         sessionService.validateCsrfToken(session);
 
+        //리뷰 삭제되면 S3 객체 사라지는 메서드 추가하기
         reviewRepository.deleteById(id);
 
         return ResponseEntity.ok("리뷰가 삭제되었습니다.");
