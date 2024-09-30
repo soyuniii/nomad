@@ -21,7 +21,7 @@ public class ChatController {
 
         // 사용자가 로그인되지 않았으면 로그인 페이지로 리다이렉트
         if (loggedUser == null) {
-            return "redirect:/login";
+            return "redirect:/auth/login";
         }
 
         // 로그인된 사용자의 닉네임을 모델에 추가
@@ -29,5 +29,3 @@ public class ChatController {
         return "chat"; // chat.html 반환
     }
 }
-
-

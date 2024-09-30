@@ -5,62 +5,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>1:1 Chat</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        #chatwindow {
-            border: 1px solid #ccc;
-            padding: 10px;
-            height: 400px;
-            overflow-y: scroll;
-            margin-bottom: 10px;
-        }
-    </style>
 </head>
 <body>
 <div class="container">
     <h1>1:1 Chat - <span id="senderName" th:text="${nickname}">사용자 닉네임</span></h1>
+
+    <div class="form-group">
+        <input type="text" id="recipientInput" class="form-control" placeholder="받는 사람 닉네임을 입력하세요">
+    </div>
+
     <ul id="messages" class="list-group">
         <!-- 메시지가 여기에 추가됩니다 -->
     </ul>
+
     <div class="form-group">
         <input type="text" id="messageInput" class="form-control" placeholder="메시지를 입력하세요">
     </div>
+
     <button class="btn btn-primary" onclick="sendMessage()">전송</button>
 </div>
 
-<!-- WebSocket 연결 및 메시지 전송을 위한 JavaScript 코드 -->
 <script type="text/javascript">
     var ws;
 
     function connect() {
-        ws = new WebSocket("ws://localhost:8080/ws/chat");  // WebSocket 서버 주소
+        ws = new WebSocket("ws://localhost:8080/ws/chat");
+
         ws.onopen = function() {
             console.log("WebSocket 연결 성공");
         };
+
         ws.onmessage = function(event) {
             var messages = document.getElementById('messages');
-            var messageParts = event.data.split(": ", 2); // "보낸사람: 메시지" 형태로 분리
-            var message = document.createElement('li');
-            message.className = 'list-group-item';  // Bootstrap 클래스로 스타일 지정
-            message.appendChild(document.createTextNode(event.data)); // 전체 메시지
-            messages.appendChild(message);  // 받은 메시지를 화면에 추가
+            var messageData = event.data;
+
+            // 메시지가 JSON 형식인지 여부 확인
+            try {
+                var parsedMessage = JSON.parse(messageData);
+                var sender = parsedMessage.sender;
+                var content = parsedMessage.content;
+
+                var message = document.createElement('li');
+                message.className = 'list-group-item';
+                message.appendChild(document.createTextNode(sender + ": " + content));
+                messages.appendChild(message);
+            } catch (e) {
+                console.error("메시지 파싱 실패: ", e);
+            }
         };
+
         ws.onerror = function(error) {
             console.error("WebSocket 오류: ", error);
         };
+
         ws.onclose = function() {
             console.log("WebSocket 연결 종료");
         };
     }
 
     function sendMessage() {
-        var input = document.getElementById("messageInput");
-        var senderName = document.getElementById("senderName").textContent; // 보낸 사람의 이름 가져오기
-        var messageToSend = senderName + ": " + input.value; // 메시지 포맷: "보낸사람: 메시지"
-        ws.send(messageToSend);  // 입력한 메시지를 서버로 전송
-        input.value = '';  // 입력 창 비우기
+        var recipient = document.getElementById("recipientInput").value;
+        var messageInput = document.getElementById("messageInput").value;
+        var senderName = document.getElementById("senderName").textContent;
+
+        // 메시지 포맷: JSON 형식으로 전송
+        var messageToSend = JSON.stringify({
+            sender: senderName,
+            recipient: recipient,
+            content: messageInput
+        });
+
+
+        ws.send(messageToSend);
+        console.log("보낸 메시지: " + messageToSend);  // 메시지 전송 확인 로그
+        document.getElementById("messageInput").value = '';
     }
 
-    window.onload = connect;  // 페이지 로드 시 연결
+    window.onload = connect;
 </script>
 </body>
 </html>
