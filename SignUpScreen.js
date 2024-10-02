@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, TouchableWithoutFeedback, Keyboard } from 'react-native';
 
 function SignUpScreen() {
   const [isFocusedNickname, setIsFocusedNickname] = useState(false); 
@@ -8,7 +8,13 @@ function SignUpScreen() {
   const [isFocusedPassword, setIsFocusedPassword] = useState(false); 
   const [isFocusedPasswordConfirm, setIsFocusedPasswordConfirm] = useState(false);
 
+
+
+
+
   return (
+    <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
+    
     <View style={styles.container}>
       <Text style={styles.title}>회원가입</Text>
       
@@ -65,6 +71,8 @@ function SignUpScreen() {
         <Text style={styles.signUpButtonText}>시작하기</Text>
       </TouchableOpacity>
     </View>
+      
+    </TouchableWithoutFeedback>
   );
 }
 
