@@ -10,6 +10,8 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^2.0.0",
+    "@react-native-picker/picker": "^2.8.1",
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/stack": "^6.4.1",
     "axios": "^1.7.7",
@@ -17,16 +19,17 @@
     "express": "^4.21.0",
     "react": "18.3.1",
     "react-native": "0.75.3",
-    "react-native-gesture-handler": "^2.19.0",
+    "react-native-gesture-handler": "^2.20.0",
     "react-native-safe-area-context": "^4.11.0",
     "react-native-screens": "^3.34.0",
-    "react-native-video": "^6.6.2",
+    "react-native-video": "^6.6.3",
     "react-native-webview": "^13.12.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.20.0",
     "@babel/runtime": "^7.20.0",
+    "@react-native-community/cli": "^14.1.1",
     "@react-native/babel-preset": "0.75.3",
     "@react-native/eslint-config": "0.75.3",
     "@react-native/metro-config": "0.75.3",
