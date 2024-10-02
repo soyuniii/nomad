@@ -6,8 +6,8 @@ function HomeScreen({ navigation }) {
     <View style={styles.container}>
       <View style={styles.textContainer}>
         <Text style={styles.title}>
-          <Text style={styles.nomad}>nom:ad</Text>
-          가 처음이신가요?
+          <Text style={styles.nomad}>nom:ad 가{"\n"}</Text>
+          처음이신가요?
         </Text>
         <Text style={styles.subtitle}>신규 회원이시라면, {"\n"}회원가입을 진행해주세요.</Text>
       </View>
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     backgroundColor: '#fff',
-    paddingHorizontal: 20,   // 화면 좌우에 일정 패딩을 추가
+    paddingHorizontal: 25,   // 화면 좌우에 일정 패딩을 추가
   },
   textContainer: {
     flex: 2,
