@@ -34,23 +34,42 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         // 메시지를 JSON 형태로 파싱
-        String payload = message.getPayload();
+        String payload = message.getPayload(); // getPayload() 메소드를 통해서 텍스트의 내용을 읽어옴
+
+        // ObjectMapper를 통해서 역직렬화 진행 - Map 형태로 변환
+        // readValue(역직렬화하려는 내용 - 읽어온 메시지, 변환할 클래스 타입)
         Map<String, String> messageData = new ObjectMapper().readValue(payload, Map.class);
 
+        // 아래와 같은 형식으로 값을 저장하기 위함임 !!! json의 형태와 자바의 map의 형태가 상당히 유사함
+/*
+        {
+                "sender": "Alice",
+                "recipient": "Bob",
+                "content": "Hello!"
+        }
+*/
+
         // 보낼 사람의 닉네임과 메시지 내용 가져오기
+        // 폼에서 입력해야할 양식 수신자, 송신자, 메시지 내용을 각각 읽어와서 문자열로 선언
         String recipient = messageData.get("recipient");
         String sender = messageData.get("sender");
         String content = messageData.get("content");
 
         // 수신자의 세션을 찾아서 메시지 전송
+        // 수신자의 세션이 존재하고, 열려있을 때 sessions에 저장되어 있을 때
+        // json 데이터로 파싱
         WebSocketSession recipientSession = sessions.get(recipient);
-        if (recipientSession != null && recipientSession.isOpen()) {
-            recipientSession.sendMessage(new TextMessage("{\"sender\":\"" + sender + "\", \"content\":\"" + content + "\"}"));
+        if (recipientSession != null/* && recipientSession.isOpen()*/) {
+
+            recipientSession.sendMessage(new TextMessage("{\"sender\":\"" + sender + "\", \"content\":\"" + content + "\"}")); // json으로 파싱
             System.out.println("메시지 전송 성공. 수신자: " + recipient);
         } else {
             System.out.println("수신자의 세션을 찾지 못했습니다. 수신자: " + recipient);
         }
     }
+    // TextMessage는 전달할 메시지를 의미 내부에 json 형태를 정의 변수도 들어갈 수 있음
+    // sendMessage 는 수신자의 세션에 메시지를 전달한다는 의미
+    // \"는 json 파싱 시 "만 사용해서는 안되기 때문에 사용
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {

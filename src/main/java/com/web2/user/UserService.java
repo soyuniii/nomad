@@ -1,9 +1,19 @@
 package com.web2.user;
 
+import com.web2.Exceptions.AuthenticationException;
+import com.web2.Exceptions.DuplicateException;
+import com.web2.Exceptions.UserNotFoundException;
+import com.web2.user.dto.LoginUser;
+import com.web2.user.dto.SignUser;
+import com.web2.user.dto.UserDTO;
 import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
+import com.web2.review.Review;
+import java.util.List;
+
 
 @RequiredArgsConstructor
 @Service
@@ -60,7 +70,9 @@ public class UserService {
         userRepository.save(entity);
     }
 
-    //DTO로 전달받은 값을 엔티티로 변환
+    //DTO로 전달받은 값을 엔티티로 변환, 원래는 생성자를 통해서 생성하는게 베스트 
+    // 근데 수정하려는 요청을 받았을 때 생성자를 통해서 만들면 put에 대해서는 상관이 없지만 
+    // patch의 경우에는...? 따로 그냥 메소드를 만들어 주는 게 낫지 싶다
     public User toEntity(SignUser Dto) {
         User entity = new User();
         entity.setNickname(Dto.nickname());
@@ -71,6 +83,21 @@ public class UserService {
         entity.setAge(Dto.age());
         return entity;
     }
+
+    @Transactional
+    //해당 메서드가 호출되는 동안 Session이 열려 있어 lazy-loaded 데이터도 정상적으로 로드
+    public UserDTO getprofile(User user) {
+        List<Review> reviews = user.getReviewList();
+        int reviewCount = reviews.size();
+
+        return new UserDTO(
+                user.getNickname(),
+                user.getNationality(),
+                user.getAge(),
+                reviewCount
+        );
+    }
+
     public User mappingUser(LoginUser Dto) throws UserNotFoundException {
 
         Optional<User> value = userRepository.findByEmail(Dto.email());
@@ -81,14 +108,7 @@ public class UserService {
 
 
     }
-    // 닉네임을 통해 사용자를 찾는 메서드
-    public Optional<User> findByNickname(String nickname) {
-        return userRepository.findByNickname(nickname);
-    }
 
-    public Optional<User> findByEmail(String email){
-        return userRepository.findByEmail(email);
-    }
 
 
 }

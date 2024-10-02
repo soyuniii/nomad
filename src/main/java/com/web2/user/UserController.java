@@ -1,15 +1,17 @@
     package com.web2.user;
 
+    import com.web2.global.SessionService;
+    import com.web2.user.dto.LoginUser;
+    import com.web2.user.dto.SignUser;
+    import com.web2.user.dto.UserDTO;
     import jakarta.servlet.http.Cookie;
     import jakarta.servlet.http.HttpServletRequest;
     import jakarta.servlet.http.HttpServletResponse;
     import jakarta.servlet.http.HttpSession;
     import lombok.RequiredArgsConstructor;
     import org.springframework.http.*;
-    import org.springframework.web.bind.annotation.ModelAttribute;
-    import org.springframework.web.bind.annotation.PostMapping;
-    import org.springframework.web.bind.annotation.RequestBody;
-    import org.springframework.web.bind.annotation.RestController;
+    import org.springframework.web.bind.annotation.*;
+
 
     import java.util.UUID;
 
@@ -18,6 +20,7 @@
     public class UserController {
 
         public final UserService userService;
+        public final SessionService sessionService;
 
 
         @PostMapping("/auth/sign")
@@ -26,12 +29,12 @@
             return ResponseEntity.ok(result);  // 200 OK 상태 반환
 
         }
-
+        
+        // 나중에 @RequestBody로 수정하기
         @PostMapping("auth/login")
         public ResponseEntity<String> login(@ModelAttribute LoginUser Dto, HttpSession session,
                                             HttpServletRequest request, HttpServletResponse response){
             String result = userService.login(Dto);
-
 
             if (session != null) {
                 session.invalidate(); // 기존 세션 무효화
@@ -47,7 +50,7 @@
 
             String csrfToken = UUID.randomUUID().toString(); // csrf 토큰을 통해서 사용자가 보낸 요청이 아닐 경우는 처리하지 않도록 함
             session.setAttribute("csrfToken", csrfToken); // 세션에 csrfToken이 포함되도록 함
-            session.setMaxInactiveInterval(1800); // 세션 만료시간을 30분으로 설정
+            session.setMaxInactiveInterval(1800); // 세션 만료시간을 30분으로 설정 1800
 
             Cookie sessionCookie = new Cookie("SESSION_ID", session.getId());
             sessionCookie.setHttpOnly(true); // 자바스크립트에서 접근 불가
@@ -80,9 +83,24 @@
 
                 return ResponseEntity.ok("로그아웃 되셨습니다.");
             }
+
+
+
+
+
         }
 
+        @GetMapping("/my-profile")
+        public UserDTO getuser(HttpSession session, @CookieValue(value = "SESSION_ID", required = false) String sessionId){
+            sessionService.validateSession(sessionId,session);
+            sessionService.validateCsrfToken(session);
+            User user = sessionService.validateUser(session);
 
+            UserDTO userDTO = userService.getprofile(user);
+            return userDTO;
+
+
+        }
 
 
 

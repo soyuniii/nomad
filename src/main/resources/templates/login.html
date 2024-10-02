@@ -46,7 +46,7 @@
                 .then(response => {
                     if (response.ok) {
                         // 로그인 성공 시 메시지 표시 및 버튼 활성화
-                        document.getElementById('message').style.display = 'block';
+                        document.getElementById('message').style.display = 'block'; // 'message'로 수정
                         document.getElementById('loginForm').style.display = 'none'; // 폼 숨기기
                     } else {
                         // 로그인 실패 시 처리
@@ -63,6 +63,7 @@
             window.location.href = '/chat';
         });
     </script>
+
 </div>
 
 </body>
