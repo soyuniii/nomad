@@ -22,7 +22,7 @@ function HomeScreen({ navigation }) {
         <View style={styles.divider} />
 
         {/* 로그인 버튼 */}
-        <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('Experiment2')}>
+        <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('Login')}>
           <Text style={styles.loginText}>로그인</Text>
         </TouchableOpacity>
       </View>
