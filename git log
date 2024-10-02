@@ -1,0 +1,73 @@
+[33mcommit 70f37f5e4cae554ca38789b3276a621eccfc15b8[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfront-준하[m[33m, [m[1;31morigin/front-준하[m[33m)[m
+Merge: cf77128 d46ab08
+Author: llis3 <glsemdhs@gmail.com>
+Date:   Wed Oct 2 19:23:02 2024 +0900
+
+    로그인화면 및 회원가입 코드추가
+
+[33mcommit cf771287e223618db6d47121736acfbb80ec0ff5[m
+Author: llis3 <glsemdhs@gmail.com>
+Date:   Wed Oct 2 19:18:38 2024 +0900
+
+    hi
+
+[33mcommit d46ab08a112f3603a4125ff35f788136c9f41c92[m
+Merge: 89e3851 912577d
+Author: soyuniii <pe1229@naver.com>
+Date:   Wed Oct 2 15:37:43 2024 +0900
+
+    Merge pull request #2 from Jesuji/front-소윤
+    
+    intro 초기화면 구성
+
+[33mcommit 912577d38220a0ca3c19007b58f88f92e4c21008[m
+Author: soyuniii <pe1229@naver.com>
+Date:   Wed Oct 2 15:35:22 2024 +0900
+
+    intro 초기화면 구성
+
+[33mcommit 89e38511c318437e9229debf0bb2bd0d25a36271[m
+Merge: fcdbf0c b80806e
+Author: soyuniii <pe1229@naver.com>
+Date:   Wed Oct 2 10:02:57 2024 +0900
+
+    Merge pull request #1 from Jesuji/front-소윤
+    
+    로그인화면 구현
+
+[33mcommit b80806e79e52f31daea1e411b9bced72418393dc[m
+Merge: b259e7f fcdbf0c
+Author: soyuniii <pe1229@naver.com>
+Date:   Wed Oct 2 10:02:40 2024 +0900
+
+    Merge branch 'front-준하' into front-소윤
+
+[33mcommit b259e7f874bda9c1d3311d342194b8f221600ce7[m
+Author: soyuniii <pe1229@naver.com>
+Date:   Wed Oct 2 09:49:13 2024 +0900
+
+    로그인화면 구현
+
+[33mcommit d9ca473906c87c002b8a2527509d20a7ccd742ea[m
+Author: soyuniii <pe1229@naver.com>
+Date:   Wed Oct 2 09:19:09 2024 +0900
+
+    변경사항 저장
+
+[33mcommit fcdbf0c21af97c28efbad52e0672f4fd3275613e[m
+Author: llis3 <glsemdhs@gmail.com>
+Date:   Wed Oct 2 00:40:26 2024 +0900
+
+    for
+
+[33mcommit 717df80eeb972d97a5d2fd856bc99818de5c4a8a[m[33m ([m[1;31mWeb2/front-준하[m[33m)[m
+Author: llis3 <glsemdhs@gmail.com>
+Date:   Tue Oct 1 22:25:46 2024 +0900
+
+    hi
+
+[33mcommit e3450a39f88c8a8e345f848c4d1d241865c10496[m
+Author: llis3 <glsemdhs@gmail.com>
+Date:   Tue Oct 1 20:53:15 2024 +0900
+
+    front-준하
