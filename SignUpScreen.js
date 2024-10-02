@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, TouchableWithoutFeedback, Keyboard } from 'react-native';
 
-function SignUpScreen() {
+function SignUpScreen({navigation}) {
   const [isFocusedNickname, setIsFocusedNickname] = useState(false); 
   const [isFocusedNationality, setIsFocusedNationality] = useState(false); 
   const [isFocusedEmail, setIsFocusedEmail] = useState(false); 
@@ -67,9 +67,10 @@ function SignUpScreen() {
       />
 
       {/* 시작하기 버튼 */}
-      <TouchableOpacity style={styles.signUpButton}>
-        <Text style={styles.signUpButtonText}>시작하기</Text>
+      <TouchableOpacity style={styles.signUpButton} onPress={() => navigation.navigate('Intro')}>  
+        <Text style={styles.signUpButtonText}>시작하기</Text>  
       </TouchableOpacity>
+      
     </View>
       
     </TouchableWithoutFeedback>
