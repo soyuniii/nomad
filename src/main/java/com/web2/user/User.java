@@ -22,7 +22,7 @@ public class User {
 
     private String nickname;
     private String nationality;
-    private Boolean is_vegetarian;
+    /*private Boolean is_vegetarian;*/
     private Integer age;
 
     //만약 ReviewList가 항상 필요하다면 EAGER 추가

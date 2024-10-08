@@ -20,7 +20,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
 
     List<Restaurant> findByCategory(String category);
 
-    //@Query 어노테이션을 통해 쿼리가 실행될 때 MySQL이 해당 쿼리를 처리
+    /*//@Query 어노테이션을 통해 쿼리가 실행될 때 MySQL이 해당 쿼리를 처리
     @Query(value = "SELECT *, "
             + "(6371 * acos(cos(radians(:latitude)) * cos(radians(r.latitude)) * cos(radians(r.longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(r.latitude)))) AS distance "
             + "FROM restaurant r "
@@ -28,11 +28,21 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
             + "ORDER BY distance", nativeQuery = true)
     List<Restaurant> findNearbyRestaurants(@Param("latitude") double latitude,
                                            @Param("longitude") double longitude,
-                                           @Param("radius") double radius);
+                                           @Param("radius") double radius);*/
 
     //해시태그가 포함된 리뷰가 있는 음식점을 문자열 파싱해서 검색
     //distinct -> 리뷰에 해당 해시태그가 여러 번 포함되어 있더라도 중복된 음식점이 하나만 반환
     @Query("SELECT DISTINCT r FROM Restaurant r JOIN r.reviews rev WHERE rev.hashtags LIKE %:keyword%")
     List<Restaurant> findRestaurantsByReviewHashtags(@Param("keyword") String keyword);
 
+    @Query(value = "SELECT *, "
+            + "(6371 * acos(cos(radians(:latitude)) * cos(radians(r.latitude)) * cos(radians(r.longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(r.latitude)))) AS distance "
+            + "FROM restaurant r "
+            + "WHERE r.category LIKE %:userNationality% "  // 사용자 국적과 음식점 카테고리가 일치하는지 확인
+            + "HAVING distance < :radius "
+            + "ORDER BY distance", nativeQuery = true)
+    List<Restaurant> findNearbyRestaurantsByCategory(@Param("latitude") double latitude,
+                                                     @Param("longitude") double longitude,
+                                                     @Param("radius") double radius,
+                                                     @Param("userNationality") String userNationality);
 }

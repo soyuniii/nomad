@@ -87,7 +87,7 @@ public class UserService {
         entity.setEmail(Dto.email());
         entity.setPassword(Dto.password());
         entity.setNationality(Dto.nationality());
-        entity.setIs_vegetarian(Dto.is_vegetarian());
+        /*entity.setIs_vegetarian(Dto.is_vegetarian());*/
         entity.setAge(Dto.age());
         return entity;
     }

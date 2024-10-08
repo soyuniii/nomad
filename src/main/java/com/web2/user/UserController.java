@@ -24,7 +24,6 @@ public class UserController {
     public ResponseEntity<String> sign(@RequestBody SignUser Dto) { // 전달하고 싶은 DTO를 따로 생성해서 전달해도 됨
         String result = userService.sign(Dto);
         return ResponseEntity.ok(result);  // 200 OK 상태 반환
-
     }
 
     @PostMapping("/auth/login")

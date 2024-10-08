@@ -5,7 +5,6 @@ public record SignUser(
         String email,
         String password,
         String nationality,
-        Boolean is_vegetarian,
         Integer age) {
 }
 

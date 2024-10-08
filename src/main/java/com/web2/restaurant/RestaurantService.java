@@ -15,9 +15,9 @@ public class RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
 
-    public List<RestaurantDTO> findRestaurantNearLocation(double latitude, double longitude, double radius) {
+    public List<RestaurantDTO> findRestaurantNearLocation(double latitude, double longitude, double radius, String userNationality) {
         // Haversine formula를 사용하여 근접한 음식점 검색
-        List<Restaurant> restaurants = restaurantRepository.findNearbyRestaurants(latitude, longitude, radius);
+        List<Restaurant> restaurants = restaurantRepository.findNearbyRestaurantsByCategory(latitude, longitude, radius, userNationality);
 
         return restaurants.stream()
                 .map(restaurant -> {

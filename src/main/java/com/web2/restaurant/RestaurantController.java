@@ -1,8 +1,11 @@
 package com.web2.restaurant;
 
+import com.web2.global.SessionService;
 import com.web2.restaurant.dto.LocationRequest;
 import com.web2.restaurant.dto.RestaurantDTO;
 import com.web2.restaurant.dto.RestaurantDetailsDTO;
+import com.web2.user.User;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,17 +18,24 @@ import java.util.List;
 public class RestaurantController {
 
     private final RestaurantService restaurantService;
+    private final SessionService sessionService;
     private final RestaurantRepository restaurantRepository;
 
     //React native에서 JSON으로 사용자 위치 데이터(위도, 경도, 반경)를 전송해서 RequestBody로 받아 사용
     //반경 내의 음식점 리스트 다시 프론트로 반환 -> 네이버 지도 뷰에서 마커로 띄움.
     @PostMapping("/search/location")
-    public List<RestaurantDTO> searchRestaurants(@RequestBody LocationRequest request) {
+    public List<RestaurantDTO> searchRestaurants(@RequestBody LocationRequest request,
+                                                 HttpSession session) {
         double latitude = request.getLatitude();
         double longitude = request.getLongitude();
         double radius = request.getRadius();
 
-        return restaurantService.findRestaurantNearLocation(latitude, longitude, radius);
+        sessionService.validateCsrfToken(session);
+        User user = sessionService.validateUser(session);
+
+        String userNationality = user.getNationality();
+
+        return restaurantService.findRestaurantNearLocation(latitude, longitude, radius, userNationality);
     }
 
     @GetMapping("/search")
