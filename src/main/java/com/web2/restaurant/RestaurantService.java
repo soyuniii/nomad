@@ -1,11 +1,13 @@
 package com.web2.restaurant;
 
+import com.web2.google.GooglePlacesService;
+import com.web2.S3.S3Service;
 import com.web2.restaurant.dto.RestaurantDTO;
 import com.web2.restaurant.dto.RestaurantDetailsDTO;
 import com.web2.review.Review;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,6 +16,8 @@ import java.util.stream.Collectors;
 public class RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
+    private final GooglePlacesService googlePlacesService;
+    private final S3Service s3Service;
 
     public List<RestaurantDTO> findRestaurantNearLocation(double latitude, double longitude, double radius, String userNationality) {
         // Haversine formula를 사용하여 근접한 음식점 검색
@@ -24,14 +28,29 @@ public class RestaurantService {
                     double averageRating = calculateAverageRating(restaurant.getReviews());
                     int reviewCount = restaurant.getReviews().size();
 
+                    // Google Places API로 사진 가져오기
+                    String photoReference = googlePlacesService.getPhotoReference(restaurant.getName(), restaurant.getAddress());
+                    String photoUrl = photoReference != null ? googlePlacesService.getPhotoUrl(photoReference) : null;
+
+                    // S3에 사진 업로드
+                    String s3ImageUrl = null;
+                    try {
+                        s3ImageUrl = photoUrl != null ? s3Service.uploadFileFromUrl(photoUrl) : null;
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
                     return new RestaurantDTO(
                             restaurant.getName(),
                             restaurant.getCategory(),
                             restaurant.getAddress(),
+                            restaurant.getLatitude(),
+                            restaurant.getLongitude(),
                             restaurant.getWeekdays(),
                             restaurant.getWeekend(),
                             averageRating,
-                            reviewCount
+                            reviewCount,
+                            s3ImageUrl
                     );
                 }).collect(Collectors.toList());
     }
@@ -46,14 +65,28 @@ public class RestaurantService {
                     double averageRating = calculateAverageRating(restaurant.getReviews());
                     int reviewCount = restaurant.getReviews().size();
 
+                    //검색할 때도 사진 추가해야 됨
+                    String photoReference = googlePlacesService.getPhotoReference(restaurant.getName(),restaurant.getAddress());
+                    String photoUrl = photoReference != null ? googlePlacesService.getPhotoUrl(photoReference) : null;
+
+                    String imageUrl = null; // S3에 업로드하고 URL 반환
+                    try {
+                        imageUrl = photoUrl != null ? s3Service.uploadFileFromUrl(photoUrl) : null;
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
                     return new RestaurantDTO(
                             restaurant.getName(),
                             restaurant.getCategory(),
                             restaurant.getAddress(),
+                            restaurant.getLatitude(),
+                            restaurant.getLongitude(),
                             restaurant.getWeekdays(),
                             restaurant.getWeekend(),
                             averageRating,
-                            reviewCount
+                            reviewCount,
+                            imageUrl
                     );
                 }).collect(Collectors.toList());
     }

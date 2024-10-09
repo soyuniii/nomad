@@ -51,7 +51,7 @@ public class RestaurantController {
         return restaurantDetailsDTO;
     }
 
-    //카테고리가 베트남인 식당 필터링 -> 1769개
+   /* //카테고리가 베트남인 식당 필터링 -> 1769개
     @GetMapping("/category-vietnam")
     public List<Restaurant> getVietnamRestaurants() {
         return restaurantRepository.findByCategory("베트남");
@@ -71,5 +71,5 @@ public class RestaurantController {
     @GetMapping("/halal-restaurants")
     public List<Restaurant> getRestaurantFilterIsHalal() {
         return restaurantRepository.findByHalal(true);
-    }
+    }*/
 }
