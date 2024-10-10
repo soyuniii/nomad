@@ -1,4 +1,4 @@
-package com.web2.google;
+package com.web2.global.google;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;

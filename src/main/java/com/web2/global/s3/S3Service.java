@@ -1,4 +1,4 @@
-package com.web2.S3;
+package com.web2.global.s3;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;

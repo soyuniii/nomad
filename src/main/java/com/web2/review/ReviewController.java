@@ -2,7 +2,7 @@ package com.web2.review;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.web2.S3.S3Service;
+import com.web2.global.s3.S3Service;
 import com.web2.global.SessionService;
 import com.web2.restaurant.RestaurantRepository;
 import com.web2.review.dto.ReviewDTO;

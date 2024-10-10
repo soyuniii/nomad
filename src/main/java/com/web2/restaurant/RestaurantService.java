@@ -1,7 +1,7 @@
 package com.web2.restaurant;
 
-import com.web2.google.GooglePlacesService;
-import com.web2.S3.S3Service;
+import com.web2.global.google.GooglePlacesService;
+import com.web2.global.s3.S3Service;
 import com.web2.restaurant.dto.RestaurantDTO;
 import com.web2.restaurant.dto.RestaurantDetailsDTO;
 import com.web2.review.Review;

@@ -1,4 +1,4 @@
-package com.web2.Chat;
+package com.web2.chat;
 
 import com.web2.user.User;
 import org.springframework.stereotype.Controller;

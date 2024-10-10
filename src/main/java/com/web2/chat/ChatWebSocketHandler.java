@@ -1,4 +1,4 @@
-package com.web2.Chat;
+package com.web2.chat;
 
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.WebSocketSession;
