@@ -8,7 +8,6 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class GooglePlacesService {
 
-    //깃에 올릴 때 gitignore?
     @Value("${google.api.key}")
     private String GOOGLE_API_KEY;
 

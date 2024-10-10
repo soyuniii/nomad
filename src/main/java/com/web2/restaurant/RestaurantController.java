@@ -7,8 +7,10 @@ import com.web2.restaurant.dto.RestaurantDetailsDTO;
 import com.web2.user.User;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -25,13 +27,20 @@ public class RestaurantController {
     //반경 내의 음식점 리스트 다시 프론트로 반환 -> 네이버 지도 뷰에서 마커로 띄움.
     @PostMapping("/search/location")
     public List<RestaurantDTO> searchRestaurants(@RequestBody LocationRequest request,
-                                                 HttpSession session) {
+                                                 HttpSession session,
+                                                 @CookieValue(value = "SESSION_ID", required = false) String sessionId) {
+
+        if (sessionId == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "No Session ID");
+        }
+
+        sessionService.validateSession(sessionId, session);
+        sessionService.validateCsrfToken(session);
+        User user = sessionService.validateUser(session);
+
         double latitude = request.getLatitude();
         double longitude = request.getLongitude();
         double radius = request.getRadius();
-
-        sessionService.validateCsrfToken(session);
-        User user = sessionService.validateUser(session);
 
         String userNationality = user.getNationality();
 

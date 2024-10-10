@@ -41,6 +41,7 @@ public class RestaurantService {
                     }
 
                     return new RestaurantDTO(
+                            restaurant.getId(),
                             restaurant.getName(),
                             restaurant.getCategory(),
                             restaurant.getAddress(),
@@ -77,6 +78,7 @@ public class RestaurantService {
                     }
 
                     return new RestaurantDTO(
+                            restaurant.getId(),
                             restaurant.getName(),
                             restaurant.getCategory(),
                             restaurant.getAddress(),
