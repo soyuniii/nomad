@@ -40,13 +40,11 @@ public class UserController {
         session.setMaxInactiveInterval(1800); // 세션 만료시간을 30분으로 설정
 
         Cookie sessionCookie = new Cookie("SESSION_ID", session.getId());
-        sessionCookie.setHttpOnly(true); // 자바스크립트에서 접근 불가
+        /*sessionCookie.setHttpOnly(true); // 자바스크립트에서 접근 불가*/
         sessionCookie.setSecure(false);
         sessionCookie.setMaxAge(1800); // 쿠키의 만료 시간 30분
         sessionCookie.setPath("/");
         response.addCookie(sessionCookie); // 응답에 쿠키를 포함
-
-        response.setHeader("Set-Cookie", response.getHeader("Set-Cookie") + "; SameSite=None");
 
         return ResponseEntity.ok(result);
     }

@@ -2,6 +2,7 @@ package com.web2.restaurant;
 
 import com.web2.global.google.GooglePlacesService;
 import com.web2.global.s3.S3Service;
+import com.web2.restaurant.dto.MarkerDTO;
 import com.web2.restaurant.dto.RestaurantDTO;
 import com.web2.restaurant.dto.RestaurantDetailsDTO;
 import com.web2.review.Review;
@@ -19,7 +20,19 @@ public class RestaurantService {
     private final GooglePlacesService googlePlacesService;
     private final S3Service s3Service;
 
-    public List<RestaurantDTO> findRestaurantNearLocation(double latitude, double longitude, double radius, String userNationality) {
+    public List<MarkerDTO> findRestaurantNearLocation(double latitude, double longitude, double radius, String userNationality) {
+        List<Restaurant> restaurants = restaurantRepository.findNearbyRestaurantsByCategory(latitude, longitude, radius, userNationality);
+
+        return restaurants.stream()
+                .map(restaurant -> new MarkerDTO(
+                        restaurant.getId(),
+                        restaurant.getName(),
+                        restaurant.getLatitude(),
+                        restaurant.getLongitude()
+                )).collect(Collectors.toList());
+    }
+
+    /*public List<RestaurantDTO> findRestaurantNearLocation(double latitude, double longitude, double radius, String userNationality) {
         // Haversine formula를 사용하여 근접한 음식점 검색
         List<Restaurant> restaurants = restaurantRepository.findNearbyRestaurantsByCategory(latitude, longitude, radius, userNationality);
 
@@ -55,7 +68,7 @@ public class RestaurantService {
                     );
                 }).collect(Collectors.toList());
     }
-
+*/
     //검색 키워드 기반으로 RestaurantDTO 반환
     public List<RestaurantDTO> searchRestaurant(String keyword) {
         String cleanKeyword = keyword.trim(); // 공백 제거
@@ -93,8 +106,8 @@ public class RestaurantService {
                 }).collect(Collectors.toList());
     }
 
-    //마커로 띄우고 누르면 조회
-    //Restaurantid 기반으로 음식점 자세히 조회
+    //마커로 띄우고 누르면 restaurantId 기반으로 음식점 정보 상세 조회
+    //이걸 맨 위 메서드 참고해서 RestaurantDTO로 바꾸자.
     public RestaurantDetailsDTO getRestaurantDetails(Long id) {
         Restaurant restaurant = restaurantRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("음식점을 찾을 수 없습니다."));
