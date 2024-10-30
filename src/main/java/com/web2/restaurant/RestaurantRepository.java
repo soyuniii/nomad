@@ -13,11 +13,8 @@ import java.util.List;
 public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
 
     List<Restaurant> findByVegetarian(Boolean vegetarian);
-
     List<Restaurant> findByHalal(Boolean halal);
-
     List<Restaurant> findByGlutenfree(Boolean GlutenFree);
-
     List<Restaurant> findByCategory(String category);
 
     //@Query 어노테이션을 통해 쿼리가 실행될 때 MySQL이 해당 쿼리를 처리

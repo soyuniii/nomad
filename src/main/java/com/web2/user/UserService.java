@@ -3,16 +3,16 @@ package com.web2.user;
 import com.web2.Exceptions.AuthenticationException;
 import com.web2.Exceptions.DuplicateException;
 import com.web2.Exceptions.UserNotFoundException;
-import com.web2.user.dto.LoginUser;
-import com.web2.user.dto.SignUser;
-import com.web2.user.dto.UserDTO;
+import com.web2.user.dto.*;
 import jakarta.persistence.EntityExistsException;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 import org.springframework.transaction.annotation.Transactional;
 import com.web2.review.Review;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RequiredArgsConstructor
@@ -26,26 +26,44 @@ public class UserService {
 
 
     //회원가입 중복된 이메일, 이름을 검사하고 예외가 발생하지 않는다면 저장
-    public String sign(SignUser Dto) throws DuplicateException {
+    public ResponseUserDto sign (SignUser Dto) throws DuplicateException {
 
         checkNickname(Dto);
         checkEmail(Dto);
         createSignUser(Dto);
-        return "회원가입 성공";
+
+        return new ResponseUserDto(Dto.nickname());
 
     }
     // 로그인 기능 데이터베이스에 저장된 데이터와 DTO로 입력받은 데이터를 비교하여 로그인 성공 여부를 판단
     // 세션을 통한 로그인 기능을 구현할 것임, 그러므로 세션 ID를 넘겨주는 로직을 추가해야함
 
+    // 중복을 잡아내야 함  그리고
     public String login(LoginUser Dto) throws AuthenticationException {
+        // 사용자 정보 확인
         Optional<User> value = userRepository.findByEmailAndPassword(Dto.email(), Dto.password());
 
         if (value.isPresent()) {
-           return "로그인 성공";
+            User user = value.get();
+            return "로그인 성공";
         } else {
             throw new AuthenticationException("인증에 실패했습니다.");
         }
     }
+    // 중복 로그인을 방지
+    public String is_login(HttpSession session) throws AuthenticationException{
+
+
+        if(session.getAttribute("userNickname") != null) {
+            throw new AuthenticationException( "이미 로그인 되어 있습니다");
+
+        }else
+            return "로그인 성공";
+
+
+    }
+
+
 
     // 중복된 닉네임을 검사
     public void checkNickname(SignUser Dto) throws DuplicateException {
@@ -70,7 +88,7 @@ public class UserService {
         userRepository.save(entity);
     }
 
-    //DTO로 전달받은 값을 엔티티로 변환, 원래는 생성자를 통해서 생성하는게 베스트 
+    // DTO로 전달받은 값을 엔티티로 변환, 원래는 생성자를 통해서 생성하는게 베스트
     // 근데 수정하려는 요청을 받았을 때 생성자를 통해서 만들면 put에 대해서는 상관이 없지만 
     // patch의 경우에는...? 따로 그냥 메소드를 만들어 주는 게 낫지 싶다
     public User toEntity(SignUser Dto) {
@@ -79,7 +97,6 @@ public class UserService {
         entity.setEmail(Dto.email());
         entity.setPassword(Dto.password());
         entity.setNationality(Dto.nationality());
-        entity.setIs_vegetarian(Dto.is_vegetarian());
         entity.setAge(Dto.age());
         return entity;
     }
@@ -106,6 +123,12 @@ public class UserService {
         }
         else throw new EntityExistsException("해당 이메일로 가입된 유저가 없습니다");
 
+
+    }
+    public List<SimpleUserResponse> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(user -> new SimpleUserResponse(user.getNickname(), user.getEmail())) // 필요한 필드만 포함
+                .collect(Collectors.toList());
 
     }
 

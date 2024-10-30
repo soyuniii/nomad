@@ -31,17 +31,8 @@ public class Review extends BaseEntity {
     private User user;
 
     private String hashtags; //추가
+    private String imageUrl; //이미지 URL을 저장할 필드 추가
 
-
-   /* @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "review_hashtag",
-            joinColumns = @JoinColumn(name = "review_id"),
-            //연관된 엔티티(Hashtag)의 외래 키를 설정
-            inverseJoinColumns = @JoinColumn(name = "hashtag_id")
-    )
-    private Set<Hashtag> hashtags = new HashSet<>();
-*/
     public Review(String message, int rating, Restaurant restaurant, User user, String hashtags) {
         this.message = message;
         this.rating = rating;

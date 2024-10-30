@@ -4,25 +4,30 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
-import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
+
 
 /**
  * WebSocket 설정 클래스
- * WebSocket을 사용하기 위해 WebSocketConfigurer를 구현하며, 웹소켓 핸들러를 등록
- */
+ * WebSocket을 사용하기 위해 WebSocketConfigurer를 구현하며, 웹소켓 핸들러를 등록*/
 
-@Configuration // 스프링의 설정 클래스임을 정의
-@EnableWebSocket // 웹소켓 기능을 활성화 gradle에도 설정 추가하기
-
+@Configuration
+@EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
+
+    private final ChatWebSocketHandler chatWebSocketHandler;
+
+    public WebSocketConfig(ChatWebSocketHandler chatWebSocketHandler) {
+        this.chatWebSocketHandler = chatWebSocketHandler;
+    }
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(new ChatWebSocketHandler(), "/ws/chat")
-                .addInterceptors(new HttpSessionHandshakeInterceptor())  // HttpSession에서 WebSocketSession으로 전달
+        registry.addHandler(chatWebSocketHandler, "/ws/chat")
                 .setAllowedOrigins("*");
     }
 }
+
+
 // registerWebSocketHandlers 핸들러, 인터셉터 , 허용 경로 설정을 위해 사용
 // addhandler /ws/chat으로 접근했을 때 핸들러가 이를 처리
 // WebSocketfigurer 웹소켓 핸들러와 경로를 지정하기 위해 사용하는 인터페이스

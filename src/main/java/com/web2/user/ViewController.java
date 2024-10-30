@@ -1,4 +1,4 @@
-package com.web2;
+package com.web2.user;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

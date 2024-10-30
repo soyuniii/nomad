@@ -36,6 +36,7 @@ public class Restaurant {
     @Column(name = "is_gluten_free")
     private Boolean glutenfree;
 
+
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE)
     private List<Review> reviews = new ArrayList<>();
 
