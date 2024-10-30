@@ -22,8 +22,10 @@ public class ChatService {
         User recipient = userRepository.findByNickname(recipientNickname)
                 .orElseThrow(() -> new RuntimeException("Recipient not found"));
 
-        List<Message> messages = messageRepository.findBySenderAndRecipient(sender, recipient);
+        // 한 번의 쿼리로 양방향 메시지를 시간순으로 가져오기
+        List<Message> messages = messageRepository.findMessagesBetweenUsers(sender, recipient);
 
+        // ChatMessageDTO로 변환 후 반환
         return messages.stream()
                 .map(message -> new ChatMessageDTO(
                         message.getSender().getNickname(),
