@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+//  db에 실제로 저장되는 형태
 
 @Setter
 @Getter

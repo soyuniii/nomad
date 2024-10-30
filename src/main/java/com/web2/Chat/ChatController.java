@@ -16,9 +16,9 @@ public class ChatController {
 
     @GetMapping("/messages")
     public ResponseEntity<List<ChatMessageDTO>> getMessages(
-            @RequestParam String sender,
-            @RequestParam String recipient) {
-        List<ChatMessageDTO> messages = chatService.getMessagesBetween(sender, recipient);
+            @RequestParam String senderNickname,
+            @RequestParam String recipientNickname) {
+        List<ChatMessageDTO> messages = chatService.getMessagesBetween(senderNickname, recipientNickname);
         return ResponseEntity.ok(messages);
     }
 

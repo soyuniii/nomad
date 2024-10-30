@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+// 프론트로 메시지를 보낼 때 사용
+
 @Getter
 @Setter
 @RequiredArgsConstructor
@@ -16,7 +18,6 @@ public class ChatMessageDTO {
         this.senderNickname = senderNickname;
         this.recipientNickname = recipientNickname;
         this.content = content;
-        // this.sentAt = sentAt; // 필요에 따라 추가
     }
 
 }
