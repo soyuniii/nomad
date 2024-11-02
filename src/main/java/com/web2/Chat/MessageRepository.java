@@ -1,8 +1,6 @@
 package com.web2.Chat;
-import com.web2.Chat.Message;
-import com.web2.user.User;
 
-import lombok.RequiredArgsConstructor;
+import com.web2.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
