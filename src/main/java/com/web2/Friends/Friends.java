@@ -2,32 +2,23 @@ package com.web2.Friends;
 
 import com.web2.user.User;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Builder;
 
 @Entity
-@Getter
-@NoArgsConstructor
+@Builder
 public class Friends {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "friends_id")
-    private Integer id;  // 변수명을 소문자로 변경하여 Java 표기 규칙을 따름
-
-    private String nickname;
+    @Column(name = "friend_id")
+    private Long id;
     private String nationality;
 
-    // 유저와의 관계 설정
-    @ManyToOne(fetch = FetchType.LAZY)  // FetchType.LAZY를 사용하여 필요할 때만 데이터를 로드
-    @JoinColumn(name = "user_id")  // 외래 키 설정
+    // 1:n 유저와 친구
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
-    public Friends(String nickname, String nationality, User user) {
-        this.nickname = nickname;
-        this.nationality = nationality;
-        this.user = user; // 친구의 유저 설정
-    }
-
+    public Friends(){}
 
 }

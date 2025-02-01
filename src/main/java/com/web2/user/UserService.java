@@ -7,6 +7,7 @@ import com.web2.user.dto.*;
 import jakarta.persistence.EntityExistsException;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,15 +16,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-@RequiredArgsConstructor
+
 @Service
 public class UserService {
 
-    public final UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    @Autowired // 스프링 빈이 관리하는 객체로 생성자 주입
+    public UserService(UserRepository repo){
+        this.userRepository = repo;
+    }
 
     // 회원가입 시 중복된 이메일, 이름을 검사
     // 로그인 시에는 저장된 이메일과 패스워드 쌍이 일치하는 지 확인
-
 
     //회원가입 중복된 이메일, 이름을 검사하고 예외가 발생하지 않는다면 저장
     public ResponseUserDto sign (SignUser Dto) throws DuplicateException {
@@ -53,17 +58,12 @@ public class UserService {
     // 중복 로그인을 방지
     public String is_login(HttpSession session) throws AuthenticationException{
 
-
         if(session.getAttribute("userNickname") != null) {
             throw new AuthenticationException( "이미 로그인 되어 있습니다");
 
         }else
             return "로그인 성공";
-
-
     }
-
-
 
     // 중복된 닉네임을 검사
     public void checkNickname(SignUser Dto) throws DuplicateException {
@@ -114,7 +114,7 @@ public class UserService {
                 reviewCount
         );
     }
-
+    // 왜 이렇게 작성했지? EntityExistException 을 던져야 하는 거 아닌가
     public User mappingUser(LoginUser Dto) throws UserNotFoundException {
 
         Optional<User> value = userRepository.findByEmail(Dto.email());
@@ -124,6 +124,7 @@ public class UserService {
         else throw new EntityExistsException("해당 이메일로 가입된 유저가 없습니다");
 
 
+
     }
     public List<SimpleUserResponse> getAllUsers() {
         return userRepository.findAll().stream()
@@ -131,8 +132,6 @@ public class UserService {
                 .collect(Collectors.toList());
 
     }
-
-
 
 }
 

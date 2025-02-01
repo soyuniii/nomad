@@ -2,17 +2,21 @@ package com.web2.Chat;
 
 import com.web2.Chat.dtos.ChatMessageDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequiredArgsConstructor
 @RestController
-
 public class ChatController {
 
     private final ChatService chatService;
+
+    @Autowired
+    public ChatController(ChatService chatService) {
+        this.chatService = chatService;
+    }
 
     @GetMapping("/messages")
     public ResponseEntity<List<ChatMessageDTO>> getMessages(

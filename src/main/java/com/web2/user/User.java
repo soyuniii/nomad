@@ -31,6 +31,6 @@ public class User {
     private List<Review> reviewList;
 
     // 한 유저가 여러 친구를 가질 수 있는 관계 설정
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Friends> friendsList;
 }
