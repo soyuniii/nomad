@@ -1,7 +1,7 @@
 package com.web2.restaurant.dto;
 
-//위치 기반 검색에 이용
-public record RestaurantDTO(Long id, String name, String category, String address, Double latitude, Double longitude, String weekdays, String weekend,
+//음식점 상세 정보 조회에 이용
+public record RestaurantDTO(String name, String category, String address, String weekdays, String weekend,
                             double averageRating, int reviewCount, String imageUrl) {
 }
 

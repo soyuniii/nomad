@@ -4,10 +4,10 @@ import com.web2.global.google.GooglePlacesService;
 import com.web2.global.s3.S3Service;
 import com.web2.restaurant.dto.MarkerDTO;
 import com.web2.restaurant.dto.RestaurantDTO;
-import com.web2.restaurant.dto.RestaurantDetailsDTO;
 import com.web2.review.Review;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -69,6 +69,38 @@ public class RestaurantService {
                 }).collect(Collectors.toList());
     }
 */
+    //마커로 띄우고 누르면 restaurantId 기반으로 음식점 정보 상세 조회
+    public RestaurantDTO getRestaurantDetails(Long id) {
+        Restaurant restaurant = restaurantRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("음식점을 찾을 수 없습니다."));
+
+        double averageRating = calculateAverageRating(restaurant.getReviews());
+        int reviewCount = restaurant.getReviews().size();
+
+        // Google Places API로 사진 가져오기
+        String photoReference = googlePlacesService.getPhotoReference(restaurant.getName(), restaurant.getAddress());
+        String photoUrl = photoReference != null ? googlePlacesService.getPhotoUrl(photoReference) : null;
+
+        // S3에 사진 업로드
+        String s3ImageUrl = null;
+        try {
+            s3ImageUrl = photoUrl != null ? s3Service.uploadFileFromUrl(photoUrl) : null;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return new RestaurantDTO(
+                restaurant.getName(),
+                restaurant.getCategory(),
+                restaurant.getAddress(),
+                restaurant.getWeekdays(),
+                restaurant.getWeekend(),
+                averageRating,
+                reviewCount,
+                s3ImageUrl
+        );
+    }
+
     //검색 키워드 기반으로 RestaurantDTO 반환
     public List<RestaurantDTO> searchRestaurant(String keyword) {
         String cleanKeyword = keyword.trim(); // 공백 제거
@@ -80,7 +112,7 @@ public class RestaurantService {
                     int reviewCount = restaurant.getReviews().size();
 
                     //검색할 때도 사진 추가해야 됨
-                    String photoReference = googlePlacesService.getPhotoReference(restaurant.getName(),restaurant.getAddress());
+                    String photoReference = googlePlacesService.getPhotoReference(restaurant.getName(), restaurant.getAddress());
                     String photoUrl = photoReference != null ? googlePlacesService.getPhotoUrl(photoReference) : null;
 
                     String imageUrl = null; // S3에 업로드하고 URL 반환
@@ -91,12 +123,9 @@ public class RestaurantService {
                     }
 
                     return new RestaurantDTO(
-                            restaurant.getId(),
                             restaurant.getName(),
                             restaurant.getCategory(),
                             restaurant.getAddress(),
-                            restaurant.getLatitude(),
-                            restaurant.getLongitude(),
                             restaurant.getWeekdays(),
                             restaurant.getWeekend(),
                             averageRating,
@@ -106,27 +135,6 @@ public class RestaurantService {
                 }).collect(Collectors.toList());
     }
 
-    //마커로 띄우고 누르면 restaurantId 기반으로 음식점 정보 상세 조회
-    //이걸 맨 위 메서드 참고해서 RestaurantDTO로 바꾸자.
-    public RestaurantDetailsDTO getRestaurantDetails(Long id) {
-        Restaurant restaurant = restaurantRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("음식점을 찾을 수 없습니다."));
-
-        return new RestaurantDetailsDTO(
-                restaurant.getName(),
-                restaurant.getCategory(),
-                restaurant.getAddress(),
-                restaurant.getWeekdays(),
-                restaurant.getWeekend(),
-                convertBooleanToString(restaurant.getVegetarian()),
-                convertBooleanToString(restaurant.getGlutenfree()),
-                convertBooleanToString(restaurant.getHalal())
-        );
-    }
-
-    private String convertBooleanToString(Boolean value) {
-        return value ? "있음" : "없음";
-    }
 
     public Double calculateAverageRating(List<Review> reviews) {
         double average = reviews.stream()

@@ -9,4 +9,10 @@ public class LocationRequest {
     private Double latitude;
     private Double longitude;
     private Double radius;
+
+    public LocationRequest(Double latitude, Double longitude, Double radius) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.radius = radius;
+    }
 }

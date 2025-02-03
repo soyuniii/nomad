@@ -10,8 +10,10 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.UUID;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RequiredArgsConstructor
 @RestController
@@ -30,6 +32,8 @@ public class UserController {
     public ResponseEntity<String> login(@RequestBody LoginUser Dto,
                                         HttpSession session,
                                         HttpServletResponse response) {
+        Logger logger = LoggerFactory.getLogger(getClass());
+
         String result = userService.login(Dto);
 
         User user = userService.findUserByEmail(Dto.email());
@@ -40,11 +44,15 @@ public class UserController {
         session.setMaxInactiveInterval(1800); // 세션 만료시간을 30분으로 설정
 
         Cookie sessionCookie = new Cookie("SESSION_ID", session.getId());
-        /*sessionCookie.setHttpOnly(true); // 자바스크립트에서 접근 불가*/
-        sessionCookie.setSecure(false);
+        sessionCookie.setHttpOnly(false); // 자바스크립트에서 접근 불가
+        sessionCookie.setSecure(false); //true일 때 HTTPS에서만 쿠키가 전송
         sessionCookie.setMaxAge(1800); // 쿠키의 만료 시간 30분
         sessionCookie.setPath("/");
+        sessionCookie.setAttribute("SameSite", "None");
+
         response.addCookie(sessionCookie); // 응답에 쿠키를 포함
+
+        logger.info("SESSION_ID: {}", session.getId());
 
         return ResponseEntity.ok(result);
     }
@@ -62,7 +70,7 @@ public class UserController {
             Cookie sessionCookie = new Cookie("SESSION_ID", null); // 세션 ID를 null로 설정
             sessionCookie.setPath("/"); // 유효 경로 설정
             sessionCookie.setMaxAge(0); // 쿠키 만료 시간 0으로 설정 (즉시 삭제)
-            sessionCookie.setHttpOnly(true); // HttpOnly 속성 유지
+            /*sessionCookie.setHttpOnly(true); // HttpOnly 속성 유지*/
             sessionCookie.setSecure(true);   // HTTPS에서만 전송되는 속성 유지 (필요시)
             response.addCookie(sessionCookie); // 응답에 쿠키 추가
 
