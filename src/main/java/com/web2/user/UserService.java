@@ -7,25 +7,20 @@ import com.web2.user.dto.*;
 import jakarta.persistence.EntityExistsException;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+
 import java.util.Optional;
+
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.web2.review.Review;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
-
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
-
-    @Autowired // 스프링 빈이 관리하는 객체로 생성자 주입
-    public UserService(UserRepository repo){
-        this.userRepository = repo;
-    }
 
     // 회원가입 시 중복된 이메일, 이름을 검사
     // 로그인 시에는 저장된 이메일과 패스워드 쌍이 일치하는 지 확인
@@ -35,9 +30,9 @@ public class UserService {
 
         checkNickname(Dto);
         checkEmail(Dto);
-        createSignUser(Dto);
+        save(Dto);
 
-        return new ResponseUserDto(Dto.nickname());
+        return new ResponseUserDto(Dto.nickname()); // 프론트엔드에 닉네임을 전달하기 위함
 
     }
     // 로그인 기능 데이터베이스에 저장된 데이터와 DTO로 입력받은 데이터를 비교하여 로그인 성공 여부를 판단
@@ -69,13 +64,15 @@ public class UserService {
     public void checkNickname(SignUser Dto) throws DuplicateException {
         Optional<User> value = userRepository.findByNickname(Dto.nickname());
 
-        if(value.isPresent()) {
+
+         if(value.isPresent()) {
             throw new DuplicateException("nickname already exists");
         }
     }
     // 중복된 이메일을 검사 
     public void checkEmail(SignUser Dto) throws DuplicateException {
         Optional<User> value = userRepository.findByEmail(Dto.email());
+        /*value.orElseThrow(() -> new DuplicateException("email already exists"));*/
 
         if(value.isPresent()) {
             throw new DuplicateException("Email already exists");
@@ -83,7 +80,7 @@ public class UserService {
     }
 
     // 가입된 사용자를 데이터베이스에 저장하는 로직, 엔티티 변환과 분리함
-    public void createSignUser(SignUser Dto) {
+    public void save(SignUser Dto) {
         User entity = toEntity(Dto);
         userRepository.save(entity);
     }
@@ -114,18 +111,17 @@ public class UserService {
                 reviewCount
         );
     }
-    // 왜 이렇게 작성했지? EntityExistException 을 던져야 하는 거 아닌가
     public User mappingUser(LoginUser Dto) throws UserNotFoundException {
 
         Optional<User> value = userRepository.findByEmail(Dto.email());
         if(value.isPresent()) {
-            return value.get();
+            return value.get();  // 사용자가 존재하면 반환
+        } else {
+            // 사용자가 없을 경우 UserNotFoundException을 던짐
+            throw new UserNotFoundException("해당 이메일로 가입된 유저가 없습니다");
         }
-        else throw new EntityExistsException("해당 이메일로 가입된 유저가 없습니다");
-
-
-
     }
+
     public List<SimpleUserResponse> getAllUsers() {
         return userRepository.findAll().stream()
                 .map(user -> new SimpleUserResponse(user.getNickname(), user.getEmail())) // 필요한 필드만 포함

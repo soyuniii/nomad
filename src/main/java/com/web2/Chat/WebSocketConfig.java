@@ -26,8 +26,6 @@ public class WebSocketConfig implements WebSocketConfigurer {
                 .setAllowedOrigins("*");
     }
 }
-
-
 // registerWebSocketHandlers 핸들러, 인터셉터 , 허용 경로 설정을 위해 사용
 // addhandler /ws/chat으로 접근했을 때 핸들러가 이를 처리
 // WebSocketfigurer 웹소켓 핸들러와 경로를 지정하기 위해 사용하는 인터페이스

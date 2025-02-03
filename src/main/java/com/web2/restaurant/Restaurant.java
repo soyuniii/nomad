@@ -1,6 +1,5 @@
 package com.web2.restaurant;
 
-
 import com.web2.review.Review;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -8,6 +7,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -35,7 +35,6 @@ public class Restaurant {
 
     @Column(name = "is_gluten_free")
     private Boolean glutenfree;
-
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE)
     private List<Review> reviews = new ArrayList<>();

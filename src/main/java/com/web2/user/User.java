@@ -1,6 +1,6 @@
 package com.web2.user;
 
-import com.web2.Friends.Friends;
+
 import com.web2.review.Review;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -30,7 +30,5 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<Review> reviewList;
 
-    // 한 유저가 여러 친구를 가질 수 있는 관계 설정
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Friends> friendsList;
+
 }

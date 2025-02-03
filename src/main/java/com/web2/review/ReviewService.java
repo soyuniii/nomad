@@ -1,6 +1,6 @@
 package com.web2.review;
 
-import com.web2.S3.S3Service;
+import com.web2.global.s3.S3Service;
 import com.web2.restaurant.Restaurant;
 import com.web2.restaurant.RestaurantRepository;
 import com.web2.restaurant.RestaurantService;
