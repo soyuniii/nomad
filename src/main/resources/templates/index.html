@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>API 목록</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        h1 { text-align: center; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid black; padding: 10px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        a { text-decoration: none; color: blue; }
+    </style>
+</head>
+<body>
+<h1>API 명세서</h1>
+<table>
+    <tr>
+        <th>기능</th>
+        <th>엔드포인트</th>
+        <th>HTTP 메서드</th>
+        <th>설명</th>
+    </tr>
+    <tr>
+        <td>회원가입</td>
+        <td><a href="/auth/sign">/auth/sign</a></td>
+        <td>POST</td>
+        <td>새로운 사용자 등록</td>
+    </tr>
+    <tr>
+        <td>로그인</td>
+        <td><a href="/auth/login">/auth/login</a></td>
+        <td>POST</td>
+        <td>사용자 로그인</td>
+    </tr>
+    <tr>
+        <td>로그아웃</td>
+        <td><a href="/auth/logout">/auth/logout</a></td>
+        <td>POST</td>
+        <td>사용자 로그아웃</td>
+    </tr>
+    <tr>
+        <td>프로필 조회</td>
+        <td><a href="/my-profile">/my-profile</a></td>
+        <td>GET</td>
+        <td>사용자 프로필 조회 (사진 포함 가능)</td>
+    </tr>
+    <tr>
+        <td>마커 띄우기</td>
+        <td>/restaurants/search/location</td>
+        <td>POST</td>
+        <td>지도에 음식점 마커 표시</td>
+    </tr>
+    <tr>
+        <td>음식점 세부정보 조회</td>
+        <td>/restaurants/{id}</td>
+        <td>GET</td>
+        <td>선택한 음식점의 상세 정보 조회</td>
+    </tr>
+    <tr>
+        <td>음식점 리뷰 조회</td>
+        <td>/restaurants/{id}/reviews</td>
+        <td>GET</td>
+        <td>선택한 음식점의 리뷰 목록 조회</td>
+    </tr>
+    <tr>
+        <td>음식점 리뷰 작성</td>
+        <td>/reviews/new?restaurantId=343603</td>
+        <td>POST</td>
+        <td>음식점 리뷰 작성 (이미지 포함 가능)</td>
+    </tr>
+    <tr>
+        <td>리뷰 수정</td>
+        <td>/reviews/update/{id}</td>
+        <td>PATCH</td>
+        <td>작성한 리뷰 수정</td>
+    </tr>
+    <tr>
+        <td>리뷰 삭제</td>
+        <td>/reviews/delete/{id}</td>
+        <td>DELETE</td>
+        <td>작성한 리뷰 삭제</td>
+    </tr>
+    <tr>
+        <td>키워드 검색</td>
+        <td>/restaurants/search?keyword=메뉴이름</td>
+        <td>GET</td>
+        <td>음식점 검색</td>
+    </tr>
+</table>
+</body>
+</html>
