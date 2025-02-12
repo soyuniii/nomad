@@ -1,5 +1,6 @@
 package com.web2.restaurant;
 
+import com.web2.global.Aop.SecureEndPoint;
 import com.web2.global.SessionService;
 import com.web2.restaurant.dto.LocationRequest;
 import com.web2.restaurant.dto.MarkerDTO;
@@ -24,6 +25,7 @@ public class RestaurantController {
 
     //React native에서 JSON으로 사용자 위치 데이터(위도, 경도, 반경)를 전송해서 RequestBody로 받아 사용
     //반경 내의 음식점 리스트 다시 프론트로 반환 -> 네이버 지도 뷰에서 마커로 띄움.
+    @SecureEndPoint
     @PostMapping("/search/location")
     public List<MarkerDTO> searchRestaurants(@RequestBody LocationRequest request,
                                              HttpSession session,
@@ -33,8 +35,8 @@ public class RestaurantController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "No Session ID");
         }
 
-        sessionService.validateSession(sessionId, session);
-        sessionService.validateCsrfToken(session);
+        /*sessionService.validateSession(sessionId, session);
+        sessionService.validateCsrfToken(session);*/
         User user = sessionService.validateUser(session);
 
         double latitude = request.getLatitude();
