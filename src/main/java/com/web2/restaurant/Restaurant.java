@@ -26,6 +26,7 @@ public class Restaurant {
     private String address;
     private String weekdays;// 평일 운영 시간추가
     private String weekend;// 주말 운영 시간 추가
+    private String photoUrl; // 대표 사진 URL
 
     @Column(name = "is_vegetarian")
     private Boolean vegetarian;

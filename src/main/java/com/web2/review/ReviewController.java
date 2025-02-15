@@ -32,8 +32,8 @@ public class ReviewController {
     public ResponseEntity<String> createReview(@RequestParam Long restaurantId,
                                                @CookieValue(value = "SESSION_ID", required = false) String sessionId,
                                                @RequestPart("reviewDTO") String reviewDTOString,
-                                               @RequestPart(value = "image") MultipartFile image, //이미지 파일을 추가로 받음
-                                               HttpSession session) throws JsonProcessingException {
+                                               @RequestPart(value = "image", required = false) MultipartFile image, //이미지 파일을 추가로 받음
+                                               HttpSession session) {
         try {
             sessionService.validateSession(sessionId, session);
             sessionService.validateCsrfToken(session);

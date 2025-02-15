@@ -9,6 +9,9 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -51,11 +54,36 @@ public class S3Service {
 
             // URL로부터 InputStream 열기
             InputStream inputStream = url.openStream();
+            String fileName = UUID.randomUUID().toString() + ".jpg"; // 확장자는 필요에 따라 수정
 
-            String fileName = UUID.randomUUID().toString() + ".jpg"; //확장자는 필요에 따라 수정
+            // ByteArrayOutputStream을 사용하여 InputStream을 읽고 크기 확인
+            /*ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                byteArrayOutputStream.write(buffer, 0, bytesRead);
+            }
+            byte[] fileData = byteArrayOutputStream.toByteArray();
+
+            // 파일 크기 계산
+            long contentLength = fileData.length;
+*/
+            // S3에 업로드할 파일 메타데이터 설정
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentLength(inputStream.available()); // 실제 파일 크기 설정
+            metadata.setContentType("image/jpeg"); // JPEG 이미지로 설정
+
+            // S3에 파일 업로드
+
+            amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, metadata)
+                    .withCannedAcl(CannedAccessControlList.PublicRead));
+            // 업로드된 파일의 S3 URL 반환
+            return amazonS3.getUrl(bucket, fileName).toString();
+           /* String fileName = UUID.randomUUID().toString() + ".jpg"; //확장자는 필요에 따라 수정
 
             // S3에 업로드할 파일 메타데이터 설정
             ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentLength(photoUrl.length());
             metadata.setContentType(fileName);
 
             //???
@@ -67,8 +95,12 @@ public class S3Service {
 
         } catch (IOException e) {
             throw new RuntimeException("URL에서 파일을 가져오는 중 오류 발생", e);
+        }*/
+        } catch (IOException e) {
+            throw new RuntimeException("URL에서 파일을 가져오는 중 오류 발생", e);
         }
     }
+
 
     public void deleteFileFromS3Bucket(String fileUrl) {
         String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1); // URL에서 파일명 추출
