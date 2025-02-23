@@ -14,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+/*@CrossOrigin(origins = "*") // 모든 도메인 허용*/
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/restaurants")

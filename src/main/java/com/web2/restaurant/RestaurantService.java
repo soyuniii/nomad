@@ -53,6 +53,7 @@ public class RestaurantService {
 
                     // 업데이트된 정보로 RestaurantDTO 생성
                     return new RestaurantDTO(
+                            restaurant.getId(),
                             restaurant.getLatitude(),
                             restaurant.getLongitude(),
                             restaurant.getName(),
