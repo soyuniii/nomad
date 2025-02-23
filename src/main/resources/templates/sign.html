@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+</head>
+<body>
+<h1>회원가입</h1>
+<form action="/auth/sign" method="post">
+    <label>닉네임: <input type="text" name="nickname" required></label><br>
+    <label>이메일: <input type="email" name="email" required></label><br>
+    <label>비밀번호: <input type="password" name="password" required></label><br>
+    <label>국적: <input type="text" name="nationality" required></label><br>
+    <label>나이: <input type="number" name="age" required></label><br>
+    <button type="submit">가입</button>
+</form>
+</body>
+</html>

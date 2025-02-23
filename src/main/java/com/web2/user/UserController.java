@@ -23,7 +23,6 @@
         public final UserService userService;
         public final SessionService sessionService;
 
-
         @PostMapping("/auth/sign")
         public ResponseEntity<ResponseUserDto> sign(@RequestBody SignUser Dto) { // 전달하고 싶은 DTO를 따로 생성해서 전달해도 됨
             ResponseUserDto frontdata = userService.sign(Dto);
@@ -54,7 +53,7 @@
                 ResponseUserDto nicknameResponse = new ResponseUserDto(user.getNickname());
 
                 session.setAttribute("user", user);
-                session.setAttribute("userNickname", user.getNickname());
+                // session.setAttribute("userNickname", user.getNickname());
 
                 // CSRF 토큰 및 세션 만료 설정
                 String csrfToken = UUID.randomUUID().toString();
@@ -87,7 +86,7 @@
         @PostMapping("/auth/logout")
         public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {
             HttpSession session = request.getSession(false);
-            if (session != null && session.getAttribute("userNickname") != null) {
+            if (session != null) {
                 session.invalidate();
 
                 // SESSION_ID 쿠키 삭제
@@ -116,10 +115,10 @@
             return ResponseEntity.ok(users);
         }
 
+        //@SecureEndPoint
         @GetMapping("/my-profile")
         public UserDTO getuser(HttpSession session, @CookieValue(value = "SESSION_ID", required = false) String sessionId){
-            sessionService.validateSession(sessionId,session);
-            sessionService.validateCsrfToken(session);
+
             User user = sessionService.validateUser(session);
 
             UserDTO userDTO = userService.getprofile(user);

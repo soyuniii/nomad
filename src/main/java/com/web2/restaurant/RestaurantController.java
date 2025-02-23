@@ -35,15 +35,13 @@ public class RestaurantController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "No Session ID");
         }
 
-        /*sessionService.validateSession(sessionId, session);
-        sessionService.validateCsrfToken(session);*/
-        User user = sessionService.validateUser(session);
+        // User user = sessionService.validateUser(session);
 
         double latitude = request.getLatitude();
         double longitude = request.getLongitude();
         double radius = request.getRadius();
 
-        String userNationality = user.getNationality();
+        String userNationality = "테스트용"; //user.getNationality();
 
         return restaurantService.findRestaurantNearLocation(latitude, longitude, radius, userNationality);
     }

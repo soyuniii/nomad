@@ -2,6 +2,7 @@ package com.web2.review;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.web2.global.Aop.SecureEndPoint;
 import com.web2.global.s3.S3Service;
 import com.web2.restaurant.RestaurantRepository;
 import com.web2.review.dto.ReviewDTO;
@@ -28,6 +29,7 @@ public class ReviewController {
     private final RestaurantRepository restaurantRepository;
     private final S3Service s3Service;
 
+    @SecureEndPoint
     @PostMapping("/reviews/new")
     public ResponseEntity<String> createReview(@RequestParam Long restaurantId,
                                                @CookieValue(value = "SESSION_ID", required = false) String sessionId,
@@ -35,8 +37,7 @@ public class ReviewController {
                                                @RequestPart(value = "image") MultipartFile image, //이미지 파일을 추가로 받음
                                                HttpSession session) throws JsonProcessingException {
         try {
-            sessionService.validateSession(sessionId, session);
-            sessionService.validateCsrfToken(session);
+
             User user = sessionService.validateUser(session);
 
             // JSON 파싱: reviewDTOString을 JSON 문자열로 받아서 ReviewDTO 객체로 변환
@@ -65,14 +66,14 @@ public class ReviewController {
         return ResponseEntity.ok(reviewResponseDTOS);
     }
 
+    @SecureEndPoint
     @PatchMapping("/reviews/update/{id}")
     public ResponseEntity<String> updateReview(@PathVariable Long id,
                                                @RequestPart("updateDTO") String updateDTOString,
                                                @RequestPart(value = "image", required = false) MultipartFile image,
                                                HttpSession session,
                                                @CookieValue(value = "SESSION_ID", required = false) String sessionId) throws JsonProcessingException {
-        sessionService.validateSession(sessionId, session);
-        sessionService.validateCsrfToken(session);
+
 
         ObjectMapper objectMapper = new ObjectMapper();
         ReviewUpdateDTO updateDTO = objectMapper.readValue(updateDTOString, ReviewUpdateDTO.class);
@@ -85,12 +86,12 @@ public class ReviewController {
         return ResponseEntity.ok("리뷰가 수정되었습니다.");
     }
 
+    @SecureEndPoint
     @DeleteMapping("/reviews/delete/{id}")
     public ResponseEntity<String> deleteReview(@PathVariable Long id,
                                                HttpSession session,
                                                @CookieValue(value = "SESSION_ID", required = false) String sessionId) {
-        sessionService.validateSession(sessionId, session);
-        sessionService.validateCsrfToken(session);
+
 
         //리뷰 삭제되면 S3 객체 사라지는 메서드 추가하기
         reviewRepository.deleteById(id);

@@ -14,6 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * WebSocket 핸들러 클래스
  * WebSocket을 통해 클라이언트 간의 메시지를 주고받는 로직 처리
  */
+
 @Component
 public class ChatWebSocketHandler extends TextWebSocketHandler {
 

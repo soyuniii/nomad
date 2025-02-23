@@ -46,7 +46,7 @@ public class SecurityAop {
             // 검증 통과 시 원래 메서드 실행
             return joinPoint.proceed();
         } finally {
-            System.out.println("🔓 Security Check END: " + joinPoint.toString());
+            System.out.println(" Security Check END: " + joinPoint.toString());
         }
     }
 
@@ -65,3 +65,5 @@ public class SecurityAop {
         }
     }
 }
+
+

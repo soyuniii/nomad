@@ -4,7 +4,6 @@ import com.web2.Exceptions.AuthenticationException;
 import com.web2.Exceptions.DuplicateException;
 import com.web2.Exceptions.UserNotFoundException;
 import com.web2.user.dto.*;
-import jakarta.persistence.EntityExistsException;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
