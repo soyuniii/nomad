@@ -62,7 +62,6 @@ public class UserService {
     public void checkNickname(SignUser Dto) throws DuplicateException {
         Optional<User> value = userRepository.findByNickname(Dto.nickname());
 
-
          if(value.isPresent()) {
             throw new DuplicateException("nickname already exists");
         }

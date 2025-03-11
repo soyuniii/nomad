@@ -34,6 +34,20 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         }
     }
 
+    /*@Override
+    public void afterConnectionEstablished(WebSocketSession session) {
+        String userNickname = (String) session.getAttributes().get("userNickname");
+
+        if (userNickname != null) {
+            System.err.println("Error: userNickname is null in afterConnectionEstablished()");
+            return;
+        }
+
+        sessions.put(userNickname, session);
+        System.out.println("연결된 사용자: " + userNickname);
+    }*/
+
+
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         // 메시지 내용을 JSON 형식으로 파싱

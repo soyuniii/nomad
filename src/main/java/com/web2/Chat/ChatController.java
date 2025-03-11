@@ -4,7 +4,6 @@ import com.web2.Chat.dtos.ChatMessageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -24,7 +23,6 @@ public class ChatController {
         List<ChatMessageDTO> messages = chatService.getMessagesBetween(senderNickname, recipientNickname);
         return ResponseEntity.ok(messages);
     }
-
 
     @PostMapping("/messages")
     public ResponseEntity<Void> sendMessage(

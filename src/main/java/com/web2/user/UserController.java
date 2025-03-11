@@ -29,6 +29,7 @@
             return ResponseEntity.ok(frontdata);  // 200 OK 상태 반환 닉네임을 반환
 
         }
+
         // 쿠키를 통해서 닉네임을 가져옴으로
         @PostMapping("/auth/login")
         public ResponseEntity<?> login(
@@ -50,7 +51,6 @@
             if (result.equals("로그인 성공")) {
                 session = request.getSession(true);  // 새로운 세션 생성
                 User user = userService.mappingUser(Dto);
-                ResponseUserDto nicknameResponse = new ResponseUserDto(user.getNickname());
 
                 session.setAttribute("user", user);
                 // session.setAttribute("userNickname", user.getNickname());
@@ -74,14 +74,13 @@
                 nicknameCookie.setPath("/");
                 response.addCookie(nicknameCookie);
 
-                return ResponseEntity.ok(nicknameResponse);
+                return ResponseEntity.ok(result);
             }
 
             Map<String, String> errorResponse = new HashMap<>();
             errorResponse.put("error", "로그인 실패. 잘못된 이메일 또는 비밀번호입니다.");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
         }
-
 
         @PostMapping("/auth/logout")
         public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {
@@ -118,9 +117,7 @@
         //@SecureEndPoint
         @GetMapping("/my-profile")
         public UserDTO getuser(HttpSession session, @CookieValue(value = "SESSION_ID", required = false) String sessionId){
-
             User user = sessionService.validateUser(session);
-
             UserDTO userDTO = userService.getprofile(user);
             return userDTO;
 
