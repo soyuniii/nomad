@@ -27,7 +27,7 @@
 - 🗾 React Native Maps를 활용한 지도 표시
 
 
- 🇻🇳 베트남 음식점
+-- 🇻🇳 베트남 음식점
 <img src="https://github.com/user-attachments/assets/2e057893-93e5-4e55-ad32-87a7a64804ea" height = 600> 
 <img src="https://github.com/user-attachments/assets/b37a9f7d-4709-4607-a8b5-8076af49101a" height = 600>
 
