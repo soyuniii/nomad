@@ -60,10 +60,12 @@
 <br>
 
 
+
 ### 🔍 검색 기능 (해시태그 기반 필터링)
 - 음식점의 리뷰 내 해시태그 분석을 통해 검색 결과 제공
 <img src="https://github.com/user-attachments/assets/a7f45eef-6276-495b-8ebd-512bee98b495" height = 600>
 <img src="https://github.com/user-attachments/assets/28d1b9d6-ebe7-4651-b10c-977cdfe8f6f5" height = 600>
+
 
 <br>
 
@@ -127,4 +129,5 @@ Amazon S3 (이미지 저장)
 ## 📌 향후 업데이트 
 - 다국어 지원(영어, 일본어, 베트남어 등)
 - 리뷰에 사진 업로드 기능 추가
+- 사용자가 직접 위치를 설정할 수 있는 기능 추가 
 
