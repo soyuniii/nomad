@@ -15,8 +15,7 @@
 ## 🚀 주요 기능
 
 ### ⭐️ 회원가입 및 로그인(세션 기반 인증)
-- JWT 방식과 비교하여 보안성과 편의성 고려
-<img src="https://github.com/user-attachments/assets/1b83c78f-6993-4300-b635-cad113b7432f" height = 600>
+<img src="https://github.com/user-attachments/assets/1b83c78f-6993-4300-b635-cad113b7432f" height = 500>
 
 
 <br>
@@ -84,24 +83,26 @@
 <br> 
 
 
-## 활용 데이터 
-CSV~
+## 📕 활용 데이터 
+이 프로젝트에서는 한국문화정보원에서 제공하는 **전국 세계음식점 데이터(CSV)**를 활용하였습니다.
+-> https://www.bigdata-culture.kr/bigdata/user/data_market/detail.do?id=43de70c0-0337-11ee-a67e-69239d37dfae
+
+<br> 
 
 
 ## 📕 API 명세서
+수정하고 추가하기
 
-
-
-## 📕 ERD
-
+<br>
 
 
 ## 📌 고찰 
-- ✅ 음식점 대표 사진 설정 문제 해결
-초기에는 일부 음식점에서 이미지 URL이 존재하지 않아 오류 발생하였고, Google Places API를 통해 찾은 photoUrl이 없을 경우, 기본 이미지를 제공하도록 수정
+1️⃣ React Native의 기본 지도(react-native-maps)는 현재 위치를 자동으로 가져오지 않아, react-native-geolocation-service를 사용해 위치 정보를 받아와 연동했다. 그러나 GPS 신호가 약하거나 위치 권한이 제한된 경우 정확도가 떨어지는 문제가 있었다. 따라서 임시방편으로 직접 위치를 지정해서 연동했고, 추후에 사용자가 직접 위치를 설정할 수 있는 기능도 제공하여 보다 안정적인 검색이 가능하도록 개선할 것입니다.
 
-- ✅ 위치 정보 전달 방식 & 두 번 요청 문제 해결
-React Native에서 현재 위치를 가져오고 백엔드에 전송하는 과정에서 두 번 요청되는 문제가 발생했었는데, useEffect 내 의존성 배열 미설정으로 인해 중복 요청 발생하는게 원인이였고, useEffect에서 의존성 배열을 정확하게 설정하여 해결했다.
+2️⃣ 초기에는 일부 음식점에서 이미지 URL이 존재하지 않아 오류 발생하였고, Google Places API를 통해 찾은 photoUrl이 없을 경우, "대표 사진 없음"을 반환하는걸로 수정했습니다.
+
+3️⃣ React Native에서 현재 위치를 가져오고 백엔드에 전송하는 과정에서 두 번 요청되는 문제가 발생했었는데, useEffect 내 의존성 배열 미설정으로 인해 중복 요청 발생하는게 원인이였고, useEffect에서 의존성 배열을 정확하게 설정하여 해결했습니다.
+
 
 <br>
 
@@ -120,5 +121,10 @@ JPA & MySQL
 Google Places API (음식점 정보 및 사진 제공)
 Amazon S3 (이미지 저장)
 
+<br>
 
+
+## 📌 향후 업데이트 
+- 다국어 지원(영어, 일본어, 베트남어 등)
+- 리뷰에 사진 업로드 기능 추가
 
