@@ -44,10 +44,13 @@
 - 방문한 음식점에 대한 리뷰 작성 및 별점 평가 기능
 
 - 리뷰 작성
-<img src="https://github.com/user-attachments/assets/aede1c44-8b3c-43f6-b3a1-26f19e1bcf5a" height = 600> <img src="https://github.com/user-attachments/assets/6bbeadfa-b307-4d21-ad37-d31a313f45e4" height = 600>
+<img src="https://github.com/user-attachments/assets/aede1c44-8b3c-43f6-b3a1-26f19e1bcf5a" height = 600>
+<img src="https://github.com/user-attachments/assets/6bbeadfa-b307-4d21-ad37-d31a313f45e4" height = 600>
 
 - 프로필 -> 내 리뷰 조회 및 수정 및 삭제
-<img src="https://github.com/user-attachments/assets/3be6cf4b-55e7-439d-bbfb-85c21b5135ef" height = 600> <img src="https://github.com/user-attachments/assets/33c51711-b566-481b-8e1c-8a3b19d2c830" height = 600> <img src="https://github.com/user-attachments/assets/c7a5680c-5e83-4163-91e7-b97c78987ac2" height = 600>
+<img src="https://github.com/user-attachments/assets/3be6cf4b-55e7-439d-bbfb-85c21b5135ef" height = 600>
+<img src="https://github.com/user-attachments/assets/33c51711-b566-481b-8e1c-8a3b19d2c830" height = 600>
+<img src="https://github.com/user-attachments/assets/c7a5680c-5e83-4163-91e7-b97c78987ac2" height = 600>
 
 
 <br>
@@ -56,7 +59,6 @@
 ### 🔍 검색 기능 (해시태그 기반 필터링)
 - 음식점의 리뷰 내 해시태그 분석을 통해 검색 결과 제공
 <img src="https://github.com/user-attachments/assets/a7f45eef-6276-495b-8ebd-512bee98b495" height = 600>
-
 <img src="https://github.com/user-attachments/assets/28d1b9d6-ebe7-4651-b10c-977cdfe8f6f5" height = 600>
 
 <br>
@@ -69,7 +71,7 @@
 <br>
 
 
-📷 음식점 사진 제공
+#### 📷 음식점 사진 제공
 - 🌎 Google Places API에서 음식점 사진을 가져와 표시
 - ☁️ S3에 저장하여 이미지 캐싱 및 최적화
 
