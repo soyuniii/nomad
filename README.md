@@ -51,7 +51,7 @@
 <img src="https://github.com/user-attachments/assets/3be6cf4b-55e7-439d-bbfb-85c21b5135ef" height = 600>
 
 
-- #### 프로필 -> 내 리뷰 조회 
+- #### 프로필 -> 리뷰 수정 및 삭제
 <img src="https://github.com/user-attachments/assets/33c51711-b566-481b-8e1c-8a3b19d2c830" height = 600>
 <img src="https://github.com/user-attachments/assets/c7a5680c-5e83-4163-91e7-b97c78987ac2" height = 600>
 
