@@ -16,7 +16,7 @@
 
 ### ⭐️ 회원가입 및 로그인(세션 기반 인증)
 - JWT 방식과 비교하여 보안성과 편의성 고려
-<img src="https://github.com/user-attachments/assets/1b83c78f-6993-4300-b635-cad113b7432f" width = 500, height = 300>
+<img src="https://github.com/user-attachments/assets/1b83c78f-6993-4300-b635-cad113b7432f" width = 500, height = 500>
 
 
 <img src="https://github.com/user-attachments/assets/2e057893-93e5-4e55-ad32-87a7a64804ea" width="500">
