@@ -7,7 +7,7 @@
 
 ## 📎 기획 배경 
 한국을 방문하는 외국인 관광객들이 증가함에 따라, 현지 음식에 익숙하지 않거나 자국의 음식이 그리운 여행자들이 많아졌습니다. 하지만 원하는 음식을 파는 식당을 찾기 어렵거나 정보가 부족한 경우가 많습니다. 이를 해결하기 위해 위치 기반 추천 시스템을 활용하여 가까운 자국 음식점을 지도에 표시하여 편리하게 음식점을 찾을 수 있도록 본 프로젝트를 기획하였습니다. 또한, 리뷰 기능을 제공하여 방문한 음식점에 대한 실제 평가를 공유함으로써, 신뢰할 수 있는 정보를 제공하고 보다 만족스러운 식사 경험을 도울 수 있도록 만들었습니다.
----
+
 
 <br> 
 
@@ -16,8 +16,10 @@
 
 ### ⭐️ 회원가입 및 로그인(세션 기반 인증)
 - JWT 방식과 비교하여 보안성과 편의성 고려
-![KakaoTalk_Photo_2025-03-16-00-02-33](https://github.com/user-attachments/assets/1b83c78f-6993-4300-b635-cad113b7432f)
+<img src="https://github.com/user-attachments/assets/1b83c78f-6993-4300-b635-cad113b7432f" width = 500>
 
+
+<img src="https://github.com/user-attachments/assets/2e057893-93e5-4e55-ad32-87a7a64804ea" width="500">
 
 
 <br>
@@ -66,6 +68,24 @@
 ## 📌 고찰 
 - ✅ 음식점 대표 사진 설정 문제 해결
 초기에는 일부 음식점에서 이미지 URL이 존재하지 않아 오류 발생하였고, Google Places API를 통해 찾은 photoUrl이 없을 경우, 기본 이미지를 제공하도록 수정
+
+- ✅ 위치 정보 전달 방식 & 두 번 요청 문제 해결
+React Native에서 현재 위치를 가져오고 백엔드에 전송하는 과정에서 두 번 요청되는 문제가 발생했었는데, useEffect 내 의존성 배열 미설정으로 인해 중복 요청 발생하는게 원인이였고, useEffect에서 의존성 배열을 정확하게 설정하여 해결했다.
+
+
+🛠 기술 스택
+- Frontend
+React Native
+React Native Maps 
+Axios (API 통신)
+
+
+- Backend
+Spring Boot
+Spring Security (세션 기반 인증)
+JPA & MySQL
+Google Places API (음식점 정보 및 사진 제공)
+Amazon S3 (이미지 저장)
 
 
 서비스 실행??
