@@ -47,8 +47,11 @@
 <img src="https://github.com/user-attachments/assets/aede1c44-8b3c-43f6-b3a1-26f19e1bcf5a" height = 600>
 <img src="https://github.com/user-attachments/assets/6bbeadfa-b307-4d21-ad37-d31a313f45e4" height = 600>
 
-- 프로필 -> 내 리뷰 조회 및 수정 및 삭제
+- #### 프로필 -> 내 리뷰 조회 
 <img src="https://github.com/user-attachments/assets/3be6cf4b-55e7-439d-bbfb-85c21b5135ef" height = 600>
+
+
+- #### 프로필 -> 내 리뷰 조회 
 <img src="https://github.com/user-attachments/assets/33c51711-b566-481b-8e1c-8a3b19d2c830" height = 600>
 <img src="https://github.com/user-attachments/assets/c7a5680c-5e83-4163-91e7-b97c78987ac2" height = 600>
 
@@ -64,7 +67,7 @@
 <br>
 
 
-👤 프로필 조회 
+### 👤 프로필 조회 
 <img src="https://github.com/user-attachments/assets/c88d24b5-bb52-4b39-bf52-d1864e448064" height = 600>
 
 
