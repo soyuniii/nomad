@@ -49,6 +49,8 @@
 
 - #### 프로필 -> 내 리뷰 조회 
 <img src="https://github.com/user-attachments/assets/3be6cf4b-55e7-439d-bbfb-85c21b5135ef" height = 600>
+<img src="https://github.com/user-attachments/assets/3f9b7f12-50d5-407a-8f0f-06ec29b89963" height = 600>
+
 
 
 - #### 프로필 -> 리뷰 수정 및 삭제
