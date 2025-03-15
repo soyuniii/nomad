@@ -16,7 +16,7 @@
 
 ### ⭐️ 회원가입 및 로그인(세션 기반 인증)
 - JWT 방식과 비교하여 보안성과 편의성 고려
-<img src="https://github.com/user-attachments/assets/1b83c78f-6993-4300-b635-cad113b7432f" height = 500>
+<img src="https://github.com/user-attachments/assets/1b83c78f-6993-4300-b635-cad113b7432f" height = 600>
 
 
 <br>
@@ -25,8 +25,13 @@
 ### 📍 위치 기반 음식점 추천
 - 사용자의 현재 위치를 기반으로 반경 5km 내 자국 음식점 추천
 - 🗾 React Native Maps를 활용한 지도 표시
-<img src="https://github.com/user-attachments/assets/2e057893-93e5-4e55-ad32-87a7a64804ea" height = 500>
-  
+
+🇻🇳 베트남 음식점
+<img src="https://github.com/user-attachments/assets/2e057893-93e5-4e55-ad32-87a7a64804ea" height = 600> <img src="https://github.com/user-attachments/assets/b37a9f7d-4709-4607-a8b5-8076af49101a" height = 600>
+
+🇮🇹 이탈리아 음식점 
+<img src="https://github.com/user-attachments/assets/ce4beab3-6811-4eff-ab62-0e66ea18c163" height = 600> <img src="https://github.com/user-attachments/assets/f5e3a90c-3555-49c0-973d-ef062477c8d8" height = 600>
+
 
 <br>
 
@@ -53,6 +58,7 @@
 
 
 ## 활용 데이터 
+CSV~
 
 
 ## 📕 API 명세서
