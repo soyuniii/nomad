@@ -172,7 +172,7 @@ Backend
 
 | Backend | Backend | Frontend | Frontend |
 |---------|---------|---------|---------|
-| [김명성]() | [제수지](https://github.com/Jesuji) | [안소윤](#) | [박준하](#) |
+| [김명성](https://github.com/tomchaccom) | [제수지](https://github.com/Jesuji) | [안소윤](https://github.com/soyuniii) | [박준하](#) |
 
 
 
