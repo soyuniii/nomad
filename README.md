@@ -145,16 +145,6 @@
 - Postman
 
 
-<br>
-
-
-### 🚀 향후 업데이트 
----
-- 다국어 지원(영어, 일본어, 베트남어 등)
-- 리뷰 및 프로필 사진 업로드 기능 추가
-- 사용자가 직접 위치를 설정할 수 있는 기능 추가 
-
-
 <br> 
 
 
@@ -173,12 +163,19 @@
 
 <br> 
 
+
+
+### 🚀 향후 업데이트 
+- 다국어 지원(영어, 일본어, 베트남어 등)
+- 리뷰 및 프로필 사진 업로드 기능 추가
+- 사용자가 직접 위치를 설정할 수 있는 기능 추가 
+
+<br>
+
+
 ### 🙋‍♂️ Developer
 
 
 | Backend | Backend | Frontend | Frontend |
 |---------|---------|---------|---------|
 | [김명성](https://github.com/tomchaccom) | [제수지](https://github.com/Jesuji) | [안소윤](https://github.com/soyuniii) | [박준하](https://github.com/jh09-13) |
-
-
-
