@@ -141,6 +141,8 @@ Amazon S3 (이미지 저장)
 
 <br> 
 ### Developer
+
+
 | Backend | Backend | Frontend | Frontend |
 |---------|---------|---------|---------|
 | [김명성]() | [제수지](https://github.com/Jesuji) | [안소윤](#) | [박준하](#) |
