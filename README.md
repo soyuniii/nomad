@@ -142,13 +142,13 @@ https://desert-walker-411.notion.site/4e4ce146174148e6bf6000dd85e84647?v=9fb95da
 
 
 ## 🛠 기술 스택
-Frontend
+### 📌 Frontend
 - React Native
 - React Native Maps
 - Axios 
 
 
-Backend
+### 📌 Backend
 - Spring Boot
 - Spring Security (세션 기반 인증)
 - JPA & MySQL
