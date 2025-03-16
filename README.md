@@ -1,4 +1,4 @@
-## 🌎 한국에서 가까운 자국 음식점을 쉽게 찾는 서비스 nomad
+![image](https://github.com/user-attachments/assets/f15445c4-4679-46ee-beb3-5cc25cf1659a)## 🌎 한국에서 가까운 자국 음식점을 쉽게 찾는 서비스 nomad
 
 
 ## 📎 프로젝트 개요
@@ -22,6 +22,12 @@
 ## ⭐️ 주요 기능
 
 ### 👤 회원가입 및 로그인(세션 기반 인증)
+- 회원 가입
+<img src="https://github.com/user-attachments/assets/4399880f-6eb9-414b-9915-878f2cdde433" height = 500>
+<img src="https://github.com/user-attachments/assets/e36f97ae-f6f3-4feb-bde3-2a041e21e4d1" height = 500>
+
+
+- 로그인
 <img src="https://github.com/user-attachments/assets/1b83c78f-6993-4300-b635-cad113b7432f" height = 500>
 
 
@@ -55,6 +61,7 @@
 <img src="https://github.com/user-attachments/assets/6bbeadfa-b307-4d21-ad37-d31a313f45e4" height = 500>
 
 
+
 - #### 프로필 -> 내 리뷰 조회 
 <img src="https://github.com/user-attachments/assets/3be6cf4b-55e7-439d-bbfb-85c21b5135ef" height = 500>
 <img src="https://github.com/user-attachments/assets/3f9b7f12-50d5-407a-8f0f-06ec29b89963" height = 500>
@@ -68,6 +75,13 @@
 
 <br>
 
+
+### 💬 채팅 기능 
+<img src="https://github.com/user-attachments/assets/f51703a9-d894-4c64-8a67-3e7ec728e57e" height = 500>
+<img src="https://github.com/user-attachments/assets/9785b271-8199-4bf0-94f7-db5b49fc41bd" height = 500>
+
+
+<br>
 
 
 ### 🔍 검색 기능 (해시태그 기반 필터링)
