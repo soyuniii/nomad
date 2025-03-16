@@ -141,7 +141,8 @@ https://desert-walker-411.notion.site/4e4ce146174148e6bf6000dd85e84647?v=9fb95da
 
 
 ### 📌 **Dev Tools & Test**
-- iOS Simulator, Postman
+- iOS Simulator
+- Postman
 
 
 <br>
