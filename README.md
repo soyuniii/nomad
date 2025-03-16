@@ -111,7 +111,7 @@
 
 ## 📕 활용 데이터 
 
-https://www.bigdata-culture.kr/bigdata/user/data_market/detail.do?id=43de70c0-0337-11ee-a67e-69239d37dfae
+-> https://www.bigdata-culture.kr/bigdata/user/data_market/detail.do?id=43de70c0-0337-11ee-a67e-69239d37dfae
 
 
 <br> 
@@ -119,7 +119,7 @@ https://www.bigdata-culture.kr/bigdata/user/data_market/detail.do?id=43de70c0-03
 
 ## 📕 API 명세서
 
-https://desert-walker-411.notion.site/4e4ce146174148e6bf6000dd85e84647?v=9fb95dab867a410aa1123183f1a3934c&pvs=4
+-> https://desert-walker-411.notion.site/4e4ce146174148e6bf6000dd85e84647?v=9fb95dab867a410aa1123183f1a3934c&pvs=4
 
 
 <br>
@@ -140,7 +140,7 @@ https://desert-walker-411.notion.site/4e4ce146174148e6bf6000dd85e84647?v=9fb95da
 - Amazon S3 (이미지 저장)
 
 
-### 📌 **Dev Tools & Test**
+### 📌 Dev Tools & Test
 - iOS Simulator
 - Postman
 
@@ -152,6 +152,7 @@ https://desert-walker-411.notion.site/4e4ce146174148e6bf6000dd85e84647?v=9fb95da
 - 다국어 지원(영어, 일본어, 베트남어 등)
 - 리뷰 및 프로필 사진 업로드 기능 추가
 - 사용자가 직접 위치를 설정할 수 있는 기능 추가 
+
 
 <br> 
 
