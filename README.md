@@ -140,7 +140,7 @@ https://desert-walker-411.notion.site/4e4ce146174148e6bf6000dd85e84647?v=9fb95da
 - Amazon S3 (이미지 저장)
 
 
-### 📌 **Dev Tools & Test:**
+### 📌 **Dev Tools & Test**
 - iOS Simulator, Postman
 
 
