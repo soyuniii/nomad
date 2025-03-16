@@ -56,7 +56,7 @@
 ### 📝 리뷰 작성 및 평점 시스템
 - 방문한 음식점에 대한 리뷰 작성 및 별점 평가 기능
 
-- 리뷰 작성
+- #### 리뷰 작성
 <img src="https://github.com/user-attachments/assets/aede1c44-8b3c-43f6-b3a1-26f19e1bcf5a" height = 500>
 <img src="https://github.com/user-attachments/assets/6bbeadfa-b307-4d21-ad37-d31a313f45e4" height = 500>
 
