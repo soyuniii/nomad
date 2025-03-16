@@ -96,14 +96,15 @@
 
 ## 📕 활용 데이터 
 
--> https://www.bigdata-culture.kr/bigdata/user/data_market/detail.do?id=43de70c0-0337-11ee-a67e-69239d37dfae
+https://www.bigdata-culture.kr/bigdata/user/data_market/detail.do?id=43de70c0-0337-11ee-a67e-69239d37dfae
 
 
 <br> 
 
 
 ## 📕 API 명세서
-수정하고 추가하기
+
+https://desert-walker-411.notion.site/4e4ce146174148e6bf6000dd85e84647?v=9fb95dab867a410aa1123183f1a3934c&pvs=4
 
 
 <br>
