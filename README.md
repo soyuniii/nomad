@@ -129,7 +129,7 @@ https://desert-walker-411.notion.site/4e4ce146174148e6bf6000dd85e84647?v=9fb95da
 ### 📌 Frontend
 - React Native
 - React Native Maps
-- Axios 
+- Axios
 
 
 ### 📌 Backend
@@ -138,6 +138,10 @@ https://desert-walker-411.notion.site/4e4ce146174148e6bf6000dd85e84647?v=9fb95da
 - JPA & MySQL
 - Google Places API (음식점 정보 및 사진 제공)
 - Amazon S3 (이미지 저장)
+
+
+### 📌 **Dev Tools & Test:**
+- iOS Simulator, Postman
 
 
 <br>
